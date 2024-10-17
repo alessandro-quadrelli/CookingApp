@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "922456146048",
+    "firebase_url": "https://cookingapp-a9ba6-default-rtdb.europe-west1.firebasedatabase.app",
+    "project_id": "cookingapp-a9ba6",
+    "storage_bucket": "cookingapp-a9ba6.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:922456146048:android:2cecf7ee2c818ecdd42665",
+        "android_client_info": {
+          "package_name": "com.insubria.cookingapp"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "922456146048-4h4romcrigggrlebd6br75b6frj7a9t5.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCdeZAQj36QjK6vZPMBTqoXvFHYQ4Kq9Ag"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "922456146048-4h4romcrigggrlebd6br75b6frj7a9t5.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
