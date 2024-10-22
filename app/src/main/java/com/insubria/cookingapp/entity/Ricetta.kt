@@ -11,5 +11,6 @@ data class Ricetta(
     val tempoPreparazione: Int,
     val difficoltà: String,
     val categoria: String,
-    val note: String? = null
+    val note: String? = null,
+    val imageUrl: String? = null
 )

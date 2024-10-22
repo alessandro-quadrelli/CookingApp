@@ -54,6 +54,7 @@ dependencies {
     // Dipendenze per Room
     implementation("androidx.room:room-runtime:2.6.1")
     implementation(libs.firebase.auth.ktx)
+    implementation(libs.firebase.storage.ktx)
     ksp("androidx.room:room-compiler:2.6.1") // Sostituisci kapt con ksp
     implementation("androidx.room:room-ktx:2.6.1")
 
