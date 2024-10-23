@@ -71,6 +71,7 @@
         android:textAlignment="center"
         android:textColor="@color/white"
         android:textSize="15dp"
+        android:onClick="login"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"

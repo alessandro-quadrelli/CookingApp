@@ -17,4 +17,7 @@
     <string name="email">Indirizzo email</string>
     <string name="password">password</string>
     <string name="already_registered">Sei già registrato?</string>
+    <string name="no_account">Non hai un account?</string>
+    <string name="user_register">Registrati</string>
+    <string name="login">Login</string>
 </resources>
