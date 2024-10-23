@@ -14,4 +14,7 @@
     <string name="esplora_le_ricette">Esplora le ricette</string>
     <string name="register">Registrazione</string>
     <string name="signIn">Accedi</string>
+    <string name="email">Indirizzo email</string>
+    <string name="password">password</string>
+    <string name="already_registered">Sei già registrato?</string>
 </resources>
