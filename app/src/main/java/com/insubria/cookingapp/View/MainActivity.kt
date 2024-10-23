@@ -1,4 +1,4 @@
-package com.example.cookingapp.ui.View
+package com.insubria.cookingapp.View
 
 import android.os.Bundle
 import android.view.Menu
@@ -11,8 +11,8 @@ import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.appcompat.app.AppCompatActivity
-import com.example.cookingapp.R
-import com.example.cookingapp.databinding.ActivityMainBinding
+import com.insubria.cookingapp.R
+import com.insubria.cookingapp.databinding.ActivityMainBinding
 
 class MainActivity : AppCompatActivity() {
 

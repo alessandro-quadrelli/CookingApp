@@ -21,15 +21,15 @@
         android:theme="@style/Theme.CookingApp"
         tools:targetApi="31">
         <activity
-            android:name=".ui.View.LoginActivity"
+            android:name=".View.LoginActivity"
             android:exported="false"
             android:windowSoftInputMode="adjustPan"/>
         <activity
-            android:name=".ui.View.RegisterActivity"
+            android:name=".View.RegisterActivity"
             android:exported="false"
             android:windowSoftInputMode="adjustPan"/>
         <activity
-            android:name=".ui.View.WelcomeActivity"
+            android:name=".View.WelcomeActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -38,7 +38,7 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".ui.View.MainActivity"
+            android:name=".View.MainActivity"
             android:exported="true"
             android:label="@string/app_name"
             android:theme="@style/Theme.CookingApp.NoActionBar">
