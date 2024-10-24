@@ -14,10 +14,10 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.lifecycle.Observer
 import androidx.lifecycle.lifecycleScope
-import com.insubria.cookingapp.dao.IngredienteDao
 import com.insubria.cookingapp.entity.Ingrediente
 import com.insubria.cookingapp.repository.IngredienteRepository
 import com.insubria.cookingapp.ui.theme.CookingAppTheme
+import com.insubria.cookingapp.utils.CookingAppDatabase
 import kotlinx.coroutines.launch
 
 class MainActivity : ComponentActivity() {

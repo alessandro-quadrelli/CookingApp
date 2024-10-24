@@ -71,6 +71,7 @@ dependencies {
     implementation(libs.androidx.navigation.ui.ktx)
     implementation(libs.androidx.activity)
 
+
     // Dipendenze AndroidX Core
     implementation("androidx.core:core-ktx:1.12.0")
 

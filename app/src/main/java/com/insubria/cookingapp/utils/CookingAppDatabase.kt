@@ -1,4 +1,4 @@
-package com.insubria.cookingapp
+package com.insubria.cookingapp.utils
 
 import android.content.Context
 import androidx.room.Database

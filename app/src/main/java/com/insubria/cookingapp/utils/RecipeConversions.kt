@@ -1,4 +1,6 @@
-package com.insubria.cookingapp
+package com.insubria.cookingapp.utils
+
+import com.insubria.cookingapp.entity.Ingrediente
 
 class RecipeConversion {
 
@@ -47,4 +49,13 @@ class RecipeConversion {
     fun honeyToSugar(honeyGrams: Double): Double {
         return honeyGrams / 0.7
     }
+
+    fun multiplyIngredientQuantities(ingredienti: List<Ingrediente>, numeroPersone: Int): List<Ingrediente> {
+        return ingredienti.map { ingrediente ->
+            ingrediente.copy(quantita = ingrediente.quantita * numeroPersone)
+        }
+    }
+
+
+
 }
