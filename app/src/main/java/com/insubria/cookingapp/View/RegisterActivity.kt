@@ -32,8 +32,7 @@ class RegisterActivity : AppCompatActivity() {
             val password = signUpPassword.text.toString().trim()
             auth.signUp(email, password) { success, message ->
                 if (success) {
-                    //TODO: Sostituire LoginActivity con homeActivity
-                    startActivity(Intent(this, LoginActivity::class.java))
+                    startActivity(Intent(this, MainActivity::class.java))
                 } else {
                     Toast.makeText(this, message, Toast.LENGTH_SHORT).show()
                 }

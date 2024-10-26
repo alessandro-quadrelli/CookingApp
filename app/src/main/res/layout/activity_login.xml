@@ -11,7 +11,7 @@
         android:id="@+id/imageView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:src="@drawable/bg4"
+        android:src="@drawable/bg3"
         android:scaleType="centerCrop"
         android:foreground="@drawable/foreground_design"/>
 
@@ -44,7 +44,7 @@
         app:layout_constraintTop_toBottomOf="@+id/textview1" />
 
     <EditText
-        android:id="@+id/editText1"
+        android:id="@+id/signUpEmail"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:backgroundTint="#CCCCCC"
@@ -62,7 +62,7 @@
         app:layout_constraintWidth_percent=".8"/>
 
     <EditText
-        android:id="@+id/editText2"
+        android:id="@+id/signUpPassword"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:backgroundTint="#CCCCCC"
@@ -70,12 +70,13 @@
         android:fontFamily="serif"
         android:drawablePadding="13dp"
         android:hint="@string/password"
+        android:inputType="textPassword"
         android:textColorHint="@color/white"
         android:textColor="@color/white"
         android:maxLines="1"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/editText1"
+        app:layout_constraintTop_toBottomOf="@+id/signUpEmail"
         app:layout_constraintWidth_percent=".8"/>
 
     <Button
@@ -91,7 +92,7 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/editText2"
+        app:layout_constraintTop_toBottomOf="@+id/signUpPassword"
         app:layout_constraintVertical_bias=".75"
         app:layout_constraintWidth_percent=".8"/>
 

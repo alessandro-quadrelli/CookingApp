@@ -8,18 +8,24 @@
     <fragment
         android:id="@+id/nav_home"
         android:name="com.insubria.cookingapp.home.HomeFragment"
-        android:label="@string/menu_home"
+        android:label="@string/Home"
         tools:layout="@layout/fragment_home" />
 
     <fragment
         android:id="@+id/nav_gallery"
-        android:name="com.insubria.cookingapp.gallery.GalleryFragment"
-        android:label="@string/menu_gallery"
-        tools:layout="@layout/fragment_gallery" />
+        android:name="com.insubria.cookingapp.gallery.SLFragment"
+        android:label="@string/ShoppingList"
+        tools:layout="@layout/fragment_shoppinglist" />
 
     <fragment
         android:id="@+id/nav_slideshow"
-        android:name="com.insubria.cookingapp.slideshow.SlideshowFragment"
-        android:label="@string/menu_slideshow"
-        tools:layout="@layout/fragment_slideshow" />
+        android:name="com.insubria.cookingapp.slideshow.RecipeFragment"
+        android:label="@string/Recipe"
+        tools:layout="@layout/fragment_recipe" />
+
+    <fragment
+        android:id="@+id/nav_conversion"
+        android:name="com.insubria.cookingapp.conversion.ListFragment"
+        android:label="@string/Conversions"
+        tools:layout="@layout/fragment_list" />
 </navigation>
