@@ -4,12 +4,116 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".home.HomeFragment">
+    tools:context=".home.HomeFragment"
+    android:background="@color/light_gray">
 
-    <TextView
-        android:id="@+id/text_home"
+    <!-- EditText aggiunta sopra il LinearLayout -->
+    <EditText
+        android:id="@+id/edittext_cerca_globale"
+        android:layout_width="300dp"
+        android:layout_height="wrap_content"
+        android:background="@drawable/search_bg"
+        android:drawableLeft="@drawable/baseline_search_24"
+        android:fontFamily="serif"
+        android:hint="Cerca le tue ricette!"
+        android:padding="10dp"
+        android:textColorHint="@color/white"
+        android:textColor="@color/white"
+        android:textSize="16dp"
+        android:layout_margin="6dp"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
+
+    <LinearLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:cardView="http://schemas.android.com/apk/res-auto"
+        android:id="@+id/linearLayout1"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Home" />
+        android:orientation="vertical"
+        android:padding="16dp"
+        app:layout_constraintTop_toBottomOf="@id/edittext_cerca_globale">
+
+        <!-- Header per l'espansione del menu a tendina -->
+        <androidx.cardview.widget.CardView
+            android:id="@+id/dropdown_header"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:elevation="4dp"
+            android:padding="12dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Filtri Ricerca"
+                android:textSize="18sp"
+                android:textColor="@android:color/black" />
+        </androidx.cardview.widget.CardView>
+
+        <!-- Layout che contiene gli Spinner -->
+        <LinearLayout
+            android:id="@+id/dropdown_content"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:visibility="gone"
+            android:paddingTop="16dp">
+
+            <!-- Spinner Tipologia -->
+            <Spinner
+                android:id="@+id/spinner_tipologia"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:prompt="@string/seleziona_tipologia" />
+
+            <!-- Spinner Tipo Portata -->
+            <Spinner
+                android:id="@+id/spinner_tipo_portata"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:prompt="@string/seleziona_tipo_portata" />
+
+            <!-- Spinner Tempo -->
+            <Spinner
+                android:id="@+id/spinner_tempo"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:prompt="@string/seleziona_tempo" />
+
+            <!-- Spinner Difficoltà -->
+            <Spinner
+                android:id="@+id/spinner_difficolta"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:prompt="@string/seleziona_difficolta" />
+
+            <EditText
+                android:id="@+id/edittext_ingredienti"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Inserisci gli ingredienti"/>
+
+            <!-- Bottone per cercare -->
+            <Button
+                android:id="@+id/button_cerca"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Cerca"
+                android:background="@drawable/btn_bg_design"
+                android:fontFamily="serif"/>
+        </LinearLayout>
+    </LinearLayout>
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recyclerview_ricette"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:padding="10dp"
+        app:layout_constraintTop_toBottomOf="@id/linearLayout1"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"/>
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>

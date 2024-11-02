@@ -3,6 +3,7 @@ plugins {
     alias(libs.plugins.kotlin.android)
     alias(libs.plugins.ksp)
     id("com.google.gms.google-services")
+    id("kotlin-parcelize")
 }
 
 android {
@@ -58,6 +59,8 @@ dependencies {
     implementation("androidx.room:room-runtime:2.6.1")
     implementation(libs.firebase.auth.ktx)
     implementation(libs.firebase.storage.ktx)
+    implementation(libs.androidx.recyclerview)
+    implementation(libs.androidx.cardview)
     ksp("androidx.room:room-compiler:2.6.1") // Sostituisci kapt con ksp
     implementation("androidx.room:room-ktx:2.6.1")
 
@@ -90,4 +93,7 @@ dependencies {
     // Dipendenze per il debug
     debugImplementation(libs.androidx.ui.tooling)
     debugImplementation(libs.androidx.ui.test.manifest)
+
+    implementation ("androidx.cardview:cardview:1.0.0")
+    implementation ("androidx.recyclerview:recyclerview:1.2.1")
 }
