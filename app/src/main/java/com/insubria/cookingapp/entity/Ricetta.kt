@@ -9,7 +9,7 @@ data class Ricetta(
     val nome: String,
     val numeroPersone: Int,
     val tempoPreparazione: Int,
-    val difficoltà: String,
+    val difficolta: Int,
     val categoria: String,
     val note: String? = null,
     val imageUrl: String? = null

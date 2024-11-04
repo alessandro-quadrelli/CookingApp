@@ -29,8 +29,13 @@ class RicettaRepository(private val ricettaDao: RicettaDao) {
         return ricettaDao.getRicettaById(id)
     }
 
-    // Ricerca di ricette per nome
-    fun searchRicetteByName(nome: String): LiveData<List<Ricetta>> {
-        return ricettaDao.searchRicetteByName(nome)
+    fun searchRicetta(
+        nome: String? = null,
+        categoria: String? = null,
+        difficolta: String? = null,
+        tempo: Int? = null,
+        ingredienti: List<String>? = null
+    ): LiveData<List<Ricetta>> {
+        return ricettaDao.searchRecipes(nome, categoria, difficolta, tempo, ingredienti)
     }
 }

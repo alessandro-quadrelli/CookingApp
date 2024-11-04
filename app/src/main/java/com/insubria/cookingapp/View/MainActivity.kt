@@ -1,7 +1,10 @@
 package com.insubria.cookingapp.View
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.Menu
+import android.widget.Button
+import android.widget.TextView
 import com.google.android.material.snackbar.Snackbar
 import com.google.android.material.navigation.NavigationView
 import androidx.navigation.findNavController
@@ -12,12 +15,17 @@ import androidx.navigation.ui.setupWithNavController
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.appcompat.app.AppCompatActivity
 import com.insubria.cookingapp.R
+import com.insubria.cookingapp.auth.FirebaseAuthentication
 import com.insubria.cookingapp.databinding.ActivityMainBinding
 
 class MainActivity : AppCompatActivity() {
 
     private lateinit var appBarConfiguration: AppBarConfiguration
     private lateinit var binding: ActivityMainBinding
+    private lateinit var logoutButton: Button
+    private lateinit var navHeaderTitle: TextView
+
+    private val auth: FirebaseAuthentication = FirebaseAuthentication()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -32,11 +40,29 @@ class MainActivity : AppCompatActivity() {
                 .setAction("Action", null)
                 .setAnchorView(R.id.fab).show()
         }
+
         val drawerLayout: DrawerLayout = binding.drawerLayout
         val navView: NavigationView = binding.navView
         val navController = findNavController(R.id.nav_host_fragment_content_main)
-        // Passing each menu ID as a set of Ids because each
-        // menu should be considered as top level destinations.
+
+        // Logout button logic
+        logoutButton = navView.findViewById(R.id.log_out_button)
+        logoutButton.setOnClickListener {
+            auth.signOut()
+            startActivity(Intent(this, LoginActivity::class.java))
+            finish()
+        }
+
+        // Set the user's email in the navigation header if authenticated
+        val currentUser = auth.getCurrentUser()
+        if (currentUser != null) {
+            // Get the header view of the NavigationView and set the email
+            val headerView = navView.getHeaderView(0)
+            navHeaderTitle = headerView.findViewById(R.id.nav_header_title)
+            navHeaderTitle.text = currentUser.email ?: "Email non disponibile"
+        }
+
+        // Navigation configuration
         appBarConfiguration = AppBarConfiguration(
             setOf(
                 R.id.nav_home, R.id.nav_gallery, R.id.nav_slideshow, R.id.nav_conversion

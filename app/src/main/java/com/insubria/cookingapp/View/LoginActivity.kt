@@ -2,6 +2,7 @@ package com.insubria.cookingapp.View
 
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import android.widget.Button
 import android.widget.EditText
@@ -27,12 +28,15 @@ class LoginActivity : AppCompatActivity() {
         passwordEditText = findViewById(R.id.signUpPassword)
         loginButton = findViewById(R.id.loginbutton)
         loginButton.setOnClickListener {
+            Log.d("LoginActivity", "Login button clicked")
             val email = emailEditText.text.toString().trim().lowercase()
             val password = passwordEditText.text.toString().trim()
             auth.signIn(email, password) { success, message ->
                 if (success) {
+                    Log.d("LoginActivity", "Login successful")
                     startActivity(Intent(this, MainActivity::class.java))
                 } else {
+                    Log.d("LoginActivity", "Login failed: $message")
                     Toast.makeText(this, message, Toast.LENGTH_SHORT).show()
                 }
             }

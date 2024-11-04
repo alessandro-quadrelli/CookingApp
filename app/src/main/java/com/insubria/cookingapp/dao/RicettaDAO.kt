@@ -31,4 +31,22 @@ interface RicettaDao {
 
     @Query("SELECT * FROM ricette WHERE nome LIKE :nome")
     fun searchRicetteByName(nome: String): LiveData<List<Ricetta>>
+
+    @Query("""
+    SELECT DISTINCT r.* FROM ricette r
+    LEFT JOIN ingredienti i ON r.id = i.ricettaId
+    WHERE (:nome IS NULL OR r.nome LIKE '%' || :nome || '%')
+    AND (:categoria IS NULL OR r.categoria = :categoria)
+    AND (:difficolta IS NULL OR r.difficolta = :difficolta)
+    AND (:tempo IS NULL OR r.tempoPreparazione <= :tempo)
+    AND (:ingredienti IS NULL OR i.nome IN (:ingredienti))
+""")
+    fun searchRecipes(
+        nome: String? = null,
+        categoria: String? = null,
+        difficolta: String? = null,
+        tempo: Int? = null,
+        ingredienti: List<String>? = null
+    ): LiveData<List<Ricetta>>
+
 }
