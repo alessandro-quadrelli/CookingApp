@@ -30,6 +30,7 @@
     <string name="seleziona_categoria">Seleziona Categoria</string>
     <string name="seleziona_tempo">Seleziona Tempo</string>
     <string name="seleziona_difficolta">Seleziona Difficoltà</string>
+    <string name="raccogli_tutte_le_tue_ricette">Raccogli tutte le tue ricette</string>
 
     <!-- Array per Spinner Tipo Portata -->
     <string-array name="categoria">

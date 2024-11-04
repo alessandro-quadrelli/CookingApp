@@ -8,7 +8,8 @@
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
     <color name="orange">#FF5353</color>
-
+    <color name="gold">#FFD700</color>
+    <color name="soft_gold">#E2B007</color>
     <color name="light_gray">#D7D7D7</color>
     <color name="gray">#393D40</color>
     <color name="darkGrey">#27282C</color>
