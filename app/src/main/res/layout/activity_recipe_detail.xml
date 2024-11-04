@@ -5,9 +5,11 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:padding="16dp"
-    android:background="@color/light_gray">
+    android:background="@color/light_gray"
+    android:fillViewport="true">
 
     <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/constraint_master"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@color/white">
@@ -41,7 +43,8 @@
             app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/imageview_recipe"
-            app:layout_constraintTop_toTopOf="@id/textview_recipe" />
+            app:layout_constraintTop_toTopOf="@id/textview_recipe"
+            app:layout_constraintBottom_toTopOf="@id/imageview_recipe"/>
 
         <ImageView
             android:id="@+id/imageview_recipe"
@@ -52,7 +55,8 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/textview_recipe_name" />
+            app:layout_constraintTop_toBottomOf="@id/textview_recipe_name"
+            app:layout_constraintBottom_toTopOf="@id/constraint_difficulty"/>
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/constraint_difficulty"
@@ -60,7 +64,8 @@
             android:layout_height="wrap_content"
             app:layout_constraintTop_toBottomOf="@id/imageview_recipe"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent">
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintBottom_toTopOf="@id/textview_category">
 
             <TextView
                 android:id="@+id/textview_difficulty1"
@@ -73,7 +78,8 @@
                 android:textSize="16sp"
                 android:textColor="@color/black"
                 app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintStart_toStartOf="parent" />
 
             <TextView
                 android:id="@+id/textview_difficulty"
@@ -118,9 +124,10 @@
             android:text="Categoria:"
             android:textColor="@color/black"
             android:textStyle="bold"
-
             app:layout_constraintTop_toBottomOf="@id/constraint_difficulty"
-            app:layout_constraintStart_toStartOf="parent" />
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toStartOf="@id/textview_category"
+            app:layout_constraintBottom_toTopOf="@id/textview_prep_time1"/>
 
         <TextView
             android:id="@+id/textview_category"
@@ -144,9 +151,10 @@
             android:text="Tempo di preparazione:"
             android:textColor="@color/black"
             android:textStyle="bold"
-
             app:layout_constraintTop_toBottomOf="@id/textview_category"
-            app:layout_constraintStart_toStartOf="parent" />
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toStartOf="@id/textview_prep_time"
+            app:layout_constraintBottom_toTopOf="@id/textview_description1"/>
 
         <!-- Difficoltà in stelline -->
         <TextView
@@ -155,38 +163,13 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="170dp"
             android:paddingTop="8dp"
+            android:layout_marginLeft="5dp"
             android:text="Tempo di preparazione"
             android:textColor="@color/black"
             android:textSize="16sp"
             app:layout_constraintBottom_toBottomOf="@+id/textview_prep_time1"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/textview_category" />
-
-        <!-- Numero di persone -->
-        <TextView
-            android:id="@+id/textview_peopleNumber1"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textSize="16sp"
-            android:paddingTop="8dp"
-            android:text="Numero di persone:"
-            android:textColor="@color/black"
-            android:textStyle="bold"
-
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/textview_prep_time1"/>
-
-        <TextView
-            android:id="@+id/textview_peopleNumber"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="145dp"
-            android:paddingTop="8dp"
-            android:text="Numero di persone"
-            android:textColor="@color/black"
-            android:textSize="16sp"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/textview_prep_time"/>
 
         <!-- Descrizione della ricetta -->
         <TextView
@@ -199,23 +182,22 @@
             android:textColor="@color/black"
             android:textSize="16sp"
             android:textStyle="bold"
-
             app:layout_constraintBottom_toTopOf="@id/textview_description"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/textview_peopleNumber1" />
+            app:layout_constraintTop_toBottomOf="@id/textview_prep_time1" />
 
         <TextView
             android:id="@+id/textview_description"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginStart="7dp"
             android:layout_marginEnd="7dp"
             android:paddingTop="8dp"
             android:text="Descrizione"
             android:textColor="@color/black"
             android:textSize="16sp"
             app:layout_constraintBottom_toTopOf="@id/textview_ingredients1"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/textview_description1" />
 
@@ -224,27 +206,78 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:paddingTop="8dp"
-            android:text="Ingredienti: "
+            android:text="Ingredienti per una persona: "
             android:textColor="@color/black"
             android:textSize="16sp"
             android:textStyle="bold"
             android:textAlignment="center"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/textview_description" />
+            app:layout_constraintTop_toBottomOf="@id/textview_description"
+            app:layout_constraintBottom_toTopOf="@id/recyclerview_ingredients"/>
 
-        <TextView
-            android:id="@+id/textview_ingredients"
-            android:layout_width="0dp"
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recyclerview_ingredients"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:paddingTop="8dp"
-            android:layout_marginStart="7dp"
-            android:layout_marginEnd="7dp"
-            android:text="Ingredienti"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/textview_ingredients1"
+            app:layout_constraintBottom_toTopOf="@id/constraint_input_people"/>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/constraint_input_people"
+        android:layout_width="0dp"
+        android:layout_height="120dp"
+        app:layout_constraintTop_toBottomOf="@id/recyclerview_ingredients"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/textview_notes1">
+
+        <TextView
+            android:id="@+id/textview_people"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Inserisci il numero di persone:"
             android:textColor="@color/black"
             android:textSize="16sp"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/textview_ingredients1" />
+            android:textStyle="bold"
+            android:layout_marginTop="5dp"
+            android:layout_marginStart="10dp"
+            app:layout_constraintStart_toStartOf="@id/constraint_input_people"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toTopOf="@id/button_calculate"/>
+
+        <EditText
+            android:id="@+id/edittext_people"
+            android:layout_width="50dp"
+            android:layout_height="35dp"
+            android:layout_marginTop="5dp"
+            android:textAlignment="center"
+            android:maxLength="3"
+            android:background="@drawable/text_field_border"
+            app:layout_constraintStart_toEndOf="@id/textview_people"
+            app:layout_constraintEnd_toEndOf="@id/constraint_input_people"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toTopOf="@id/button_calculate"/>
+
+        <Button
+            android:id="@+id/button_calculate"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Calcola"
+            android:textStyle="bold"
+            android:background="@drawable/btn_bg_design"
+            android:layout_marginTop="5dp"
+            android:layout_marginBottom="5dp"
+            app:layout_constraintTop_toBottomOf="@id/textview_people"
+            app:layout_constraintStart_toStartOf="@id/constraint_input_people"
+            app:layout_constraintEnd_toEndOf="@id/constraint_input_people"
+            app:layout_constraintBottom_toBottomOf="@id/constraint_input_people" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
         <TextView
             android:id="@+id/textview_notes1"
@@ -258,7 +291,8 @@
             android:textAlignment="center"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/textview_ingredients" />
+            app:layout_constraintTop_toBottomOf="@id/constraint_input_people"
+            app:layout_constraintBottom_toTopOf="@id/textview_notes"/>
 
         <TextView
             android:id="@+id/textview_notes"
@@ -271,7 +305,34 @@
             android:textColor="@color/black"
             android:textSize="16sp"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/textview_notes1" />
+            app:layout_constraintEnd_toEndOf="@id/constraint_master"
+            app:layout_constraintTop_toBottomOf="@id/textview_notes1"
+            app:layout_constraintBottom_toTopOf="@id/constraint_modify"/>
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/constraint_modify"
+            android:layout_width="0dp"
+            android:layout_height="80dp"
+            app:layout_constraintTop_toBottomOf="@id/textview_notes"
+            app:layout_constraintStart_toStartOf="@id/constraint_master"
+            app:layout_constraintEnd_toEndOf="@id/constraint_master"
+            app:layout_constraintBottom_toBottomOf="@id/constraint_master">
+
+            <Button
+                android:id="@+id/modifyButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textStyle="bold"
+                android:text="Modifica ricetta"
+                android:background="@drawable/btn_bg_design"
+                android:layout_marginTop="5dp"
+                android:layout_marginBottom="5dp"
+                app:layout_constraintTop_toTopOf="@id/constraint_modify"
+                app:layout_constraintBottom_toBottomOf="@id/constraint_modify"
+                app:layout_constraintEnd_toEndOf="@id/constraint_modify"
+                app:layout_constraintStart_toStartOf="@id/constraint_modify"/>
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.constraintlayout.widget.ConstraintLayout>
 </ScrollView>
 

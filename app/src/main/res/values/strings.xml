@@ -27,23 +27,13 @@
     <string name="prova_gmail_com">prova@gmail.com</string>
     <string name="log_out">Esci</string>
 
-    <string name="seleziona_tipologia">Seleziona Tipologia</string>
-    <string name="seleziona_tipo_portata">Seleziona Tipo Portata</string>
+    <string name="seleziona_categoria">Seleziona Categoria</string>
     <string name="seleziona_tempo">Seleziona Tempo</string>
     <string name="seleziona_difficolta">Seleziona Difficoltà</string>
 
-    <!-- Array per Spinner Tipologia -->
-    <string-array name="tipologie">
-        <item>Seleziona Tipologia</item>
-        <item>Italiana</item>
-        <item>Cinese</item>
-        <item>Giapponese</item>
-        <item>Messicana</item>
-    </string-array>
-
     <!-- Array per Spinner Tipo Portata -->
-    <string-array name="tipi_portata">
-        <item>Seleziona Tipo Portata</item>
+    <string-array name="categoria">
+        <item>Seleziona La Categoria</item>
         <item>Antipasto</item>
         <item>Primo</item>
         <item>Secondo</item>

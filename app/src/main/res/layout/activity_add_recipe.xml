@@ -1,0 +1,159 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="16dp"
+    android:background="@color/light_gray"
+    tools:context=".View.AddRecipeActivity">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:padding="16dp"
+        android:background="@color/white">
+
+        <!-- Image Upload -->
+        <ImageView
+            android:id="@+id/imageViewRecipe"
+            android:layout_width="0dp"
+            android:layout_height="200dp"
+            android:scaleType="centerCrop"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <Button
+            android:id="@+id/buttonUploadImage"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Carica Immagine"
+            app:layout_constraintTop_toBottomOf="@id/imageViewRecipe"
+            app:layout_constraintStart_toStartOf="parent" />
+
+        <!-- Recipe Name -->
+        <EditText
+            android:id="@+id/editTextRecipeName"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:hint="Nome della Ricetta"
+            app:layout_constraintTop_toBottomOf="@id/buttonUploadImage"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent" />
+
+        <!-- Difficulty -->
+        <TextView
+            android:id="@+id/textViewDifficulty"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Difficoltà"
+            android:textColor="@color/black"
+            app:layout_constraintTop_toBottomOf="@id/editTextRecipeName"
+            app:layout_constraintStart_toStartOf="parent" />
+
+        <RatingBar
+            android:id="@+id/ratingBarDifficulty"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:numStars="5"
+            android:stepSize="1"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/textViewDifficulty" />
+
+        <!-- Category -->
+        <Spinner
+            android:id="@+id/spinnerCategory"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toBottomOf="@id/ratingBarDifficulty"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent" />
+
+        <!-- Preparation Time -->
+        <EditText
+            android:id="@+id/editTextPreparationTime"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:hint="Tempo di preparazione (minuti)"
+            android:inputType="number"
+            app:layout_constraintTop_toBottomOf="@id/spinnerCategory"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent" />
+
+        <!-- Number of People -->
+        <EditText
+            android:id="@+id/editTextNumberOfPeople"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:hint="Numero di persone"
+            android:inputType="number"
+            app:layout_constraintTop_toBottomOf="@id/editTextPreparationTime"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent" />
+
+        <!-- Description -->
+        <EditText
+            android:id="@+id/editTextDescription"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:hint="Descrizione"
+            android:inputType="textMultiLine"
+            android:lines="3"
+            app:layout_constraintTop_toBottomOf="@id/editTextNumberOfPeople"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent" />
+
+        <!-- Ingredients -->
+        <TextView
+            android:id="@+id/textViewIngredients"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Ingredienti"
+            android:textColor="@color/black"
+            app:layout_constraintTop_toBottomOf="@id/editTextDescription"
+            app:layout_constraintStart_toStartOf="parent" />
+
+        <!-- Dynamic Ingredients Section -->
+        <LinearLayout
+            android:id="@+id/linearLayoutIngredients"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintTop_toBottomOf="@id/textViewIngredients"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent" />
+
+        <Button
+            android:id="@+id/buttonAddIngredient"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Aggiungi Ingrediente"
+            app:layout_constraintTop_toBottomOf="@id/linearLayoutIngredients"
+            app:layout_constraintStart_toStartOf="parent" />
+
+        <!-- Additional Notes -->
+        <EditText
+            android:id="@+id/editTextNotes"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:hint="Note aggiuntive"
+            android:inputType="textMultiLine"
+            android:lines="3"
+            app:layout_constraintTop_toBottomOf="@id/buttonAddIngredient"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent" />
+
+        <Button
+            android:id="@+id/buttonSaveRecipe"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Salva Ricetta"
+            app:layout_constraintTop_toBottomOf="@id/editTextNotes"
+            app:layout_constraintStart_toStartOf="parent" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+</ScrollView>
