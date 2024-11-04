@@ -17,6 +17,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.insubria.cookingapp.R
 import com.insubria.cookingapp.View.RecipeDetailActivity
 import com.insubria.cookingapp.databinding.FragmentHomeBinding
+import com.insubria.cookingapp.recipe.Ingredient
 import com.insubria.cookingapp.recipe.Recipe
 import com.insubria.cookingapp.recipe.RecipeAdapter
 
@@ -34,7 +35,6 @@ class HomeFragment : Fragment() {
             name = "Spaghetti alla Carbonara",
             prepTime = "20 min",
             difficulty = 3,
-            peopleNumber = 2,
             category = "Primo",
             imageResId = R.drawable.dinner, // Usa l'ID immagine appropriato
             description = "Ridurre a bastoncini il guanciale. Da sapere: come dice il nome, il guanciale è ricavato dalla guancia del maiale, mentre la pancetta dal ventre. Per il bacon, invece, si utilizzano diverse parti del maiale.\n" +
@@ -42,18 +42,30 @@ class HomeFragment : Fragment() {
                     "Mettere a cuocere gli spaghetti in acqua bollente salata. Poi rosolare a fuoco basso il guanciale in padella con 3 cucchiai di olio extravergine di oliva, facendo in modo che sia pronto insieme alla pasta (se utilizzate la pancetta calcolare 7-8 minuti)." +
                     "Scolare al dente gli spaghetti senza sgocciolarli troppo (un po' di acqua di cottura è utile per rendere più cremoso il condimento) e rimetterli nella casseruola calda. Condirli con il guanciale appena rosolato e il suo grasso. Mescolare bene." +
                     "Subito dopo versare il composto di tuorli sulla pasta, mescolare velocemente e servire all'istante. Completate con pecorino grattugiato e una macinata di pepe.\n",
-            ingredients = "Spaghetti, uova, pancetta, pecorino, pepe nero.",
-            note ="IImportante: non bisogna cuocere le uova"
+            ingredients = mutableListOf(
+                Ingredient("Spaghetti", 200f), // Quantità in Float
+                Ingredient("Uova", 2f),
+                Ingredient("Pancetta", 150f),
+                Ingredient("Pecorino", 50f),
+                Ingredient("Pepe nero", 0.5f) // Quantità in Float, puoi usare 0.5 per "q.b."
+            ),
+            note ="Importante: non bisogna cuocere le uova, unire la salsa a fuoco spento."
         ),
         Recipe(
             name = "Risotto alla Milanese",
             prepTime = "30 min",
             difficulty = 2,
-            peopleNumber = 4,
             category = "Primo",
             imageResId = R.drawable.pizza3,
             description = "Un risotto cremoso e saporito, tipico della cucina milanese.",
-            ingredients = "Riso, brodo, zafferano, cipolla, burro, parmigiano.",
+            ingredients = mutableListOf(
+                Ingredient("Riso", 300f),
+                Ingredient("Brodo", 1f), // Assumendo 1L di brodo come 1
+                Ingredient("Zafferano", 0.1f), // Quantità in grammi o bustine
+                Ingredient("Cipolla", 1f),
+                Ingredient("Burro", 50f),
+                Ingredient("Parmigiano", 50f)
+            ),
             note = "Usa sempre brodo caldo per una cottura uniforme."
         ),
         // Aggiungi altre ricette qui: da implementare l'aggiunta dinamica
@@ -71,15 +83,13 @@ class HomeFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         // Inizializza gli Spinner con view.findViewById
-        spinnerTipologia = view.findViewById(R.id.spinner_tipologia)
-        spinnerTipoPortata = view.findViewById(R.id.spinner_tipo_portata)
+        spinnerTipoPortata = view.findViewById(R.id.spinner_categoria)
         spinnerTempo = view.findViewById(R.id.spinner_tempo)
         spinnerDifficolta = view.findViewById(R.id.spinner_difficolta)
         dropdownContent = view.findViewById(R.id.dropdown_content)
 
         // Set Adapter per ogni Spinner
-        setupSpinner(spinnerTipologia, R.array.tipologie)
-        setupSpinner(spinnerTipoPortata, R.array.tipi_portata)
+        setupSpinner(spinnerTipoPortata, R.array.categoria)
         setupSpinner(spinnerTempo, R.array.tempi)
         setupSpinner(spinnerDifficolta, R.array.difficolta)
 
@@ -94,17 +104,9 @@ class HomeFragment : Fragment() {
             }
         }
 
-        val tipologiaAdapter = ArrayAdapter.createFromResource(
-            requireContext(),
-            R.array.tipologie,
-            android.R.layout.simple_spinner_item
-        )
-        tipologiaAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
-        spinnerTipologia.adapter = tipologiaAdapter
-
         val portataAdapter = ArrayAdapter.createFromResource(
             requireContext(),
-            R.array.tipi_portata,
+            R.array.categoria,
             android.R.layout.simple_spinner_item
         )
         portataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)

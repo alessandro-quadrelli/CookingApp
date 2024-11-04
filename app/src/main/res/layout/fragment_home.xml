@@ -60,19 +60,12 @@
             android:visibility="gone"
             android:paddingTop="16dp">
 
-            <!-- Spinner Tipologia -->
-            <Spinner
-                android:id="@+id/spinner_tipologia"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:prompt="@string/seleziona_tipologia" />
-
             <!-- Spinner Tipo Portata -->
             <Spinner
-                android:id="@+id/spinner_tipo_portata"
+                android:id="@+id/spinner_categoria"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:prompt="@string/seleziona_tipo_portata" />
+                android:prompt="@string/seleziona_categoria" />
 
             <!-- Spinner Tempo -->
             <Spinner

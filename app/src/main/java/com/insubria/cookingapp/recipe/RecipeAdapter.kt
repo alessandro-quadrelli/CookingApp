@@ -6,6 +6,7 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.RatingBar
 import android.widget.TextView
+import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.insubria.cookingapp.R
 
@@ -31,10 +32,10 @@ class RecipeAdapter(
         val recipe = recipes[position]
         // Popola i dati
         holder.nameTextView.text = recipe.name
-        holder.prepTimeTextView.text = "${recipe.prepTime}"
+        holder.prepTimeTextView.text = recipe.prepTime
         holder.difficultyRatingBar.rating = recipe.difficulty.toFloat()
 
-        // Carica l’immagine (puoi usare librerie come Glide o Picasso per gestire le immagini)
+        // Carica l’immagine
         holder.imageView.setImageResource(recipe.imageResId)
 
         holder.itemView.setOnClickListener { onClick(recipe) }
@@ -42,4 +43,5 @@ class RecipeAdapter(
 
     override fun getItemCount() = recipes.size
 }
+
 
