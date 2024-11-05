@@ -4,7 +4,6 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:padding="16dp"
     android:background="@color/gray"
     android:fillViewport="true">
 
@@ -12,75 +11,56 @@
         android:id="@+id/constraint_master"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/white">
-
-        <!-- EditText per la lista della spesa -->
-        <EditText
-            android:id="@+id/editTextShoppingList"
-            android:layout_width="0dp"
-            android:layout_height="200dp"
-            android:gravity="top"
-            android:hint="Inserisci la lista..."
-            android:inputType="textMultiLine"
-            android:padding="10dp"
-            android:layout_marginTop="150dp"
-            android:layout_marginRight="10dp"
-            android:layout_marginLeft="10dp"
-            android:foregroundGravity="top"
-            android:background="@drawable/text_field_border"
-            android:textCursorDrawable="@drawable/cursor_color"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintBottom_toTopOf="@id/buttonWhatsApp"/>
+        android:background="@color/soft_gold">
 
         <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Invia la Lista della spesa con:"
-            android:textColor="@color/black"
-            android:textStyle="bold"
-            android:textSize="15sp"
-            android:textAlignment="center"
-            android:paddingStart="10dp"
-            app:layout_constraintTop_toBottomOf="@id/editTextShoppingList"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintBottom_toTopOf="@id/buttonWhatsApp"/>
-
-        <Button
-            android:id="@+id/buttonWhatsApp"
+            android:id="@+id/titleShoppingList"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="100dp"
-            android:text="WhatsApp"
-            android:textSize="14sp"
-            android:background="@drawable/btn_bg_design"
-            android:textStyle="bold"
-            android:drawableLeft="@drawable/ic_message"
-            android:drawablePadding="8dp"
+            android:fontFamily="@font/lobster_regular"
+            android:text="Lista della spesa"
+            android:textColor="@android:color/black"
+            android:textSize="40sp"
+            app:layout_constraintBottom_toTopOf="@+id/editTextShoppingList"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/editTextShoppingList"
-            app:layout_constraintBottom_toTopOf="@id/buttonEmail"/>
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.464" />
+
+        <EditText
+            android:id="@+id/editTextShoppingList"
+            android:layout_width="315dp"
+            android:layout_height="315dp"
+            android:background="@drawable/text_field_border"
+            android:gravity="top"
+            android:hint="Inserisci qui tua lista della spesa..."
+            android:inputType="textMultiLine"
+            android:padding="10dp"
+            android:textColor="@android:color/black"
+            android:textCursorDrawable="@drawable/cursor_color"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.379" />
 
         <Button
-            android:id="@+id/buttonEmail"
+            android:id="@+id/sendtext"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Email"
-            android:textSize="14sp"
             android:background="@drawable/btn_bg_design"
+            android:drawableLeft="@drawable/share_24px"
+            android:drawablePadding="6dp"
+            android:text="Condividi"
+            android:textSize="14sp"
             android:textStyle="bold"
-            android:drawableLeft="@drawable/ic_email"
-            android:drawablePadding="8dp"
-            android:layout_marginTop="30dp"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.498"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/buttonWhatsApp"/>
+            app:layout_constraintTop_toBottomOf="@+id/editTextShoppingList"
+            app:layout_constraintVertical_bias="0.147" />
+
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </ScrollView>
-
-
-
