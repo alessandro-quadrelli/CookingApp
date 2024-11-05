@@ -32,7 +32,7 @@
     <string name="seleziona_difficolta">Seleziona Difficoltà</string>
     <string name="raccogli_tutte_le_tue_ricette">Raccogli tutte le tue ricette</string>
 
-    <!-- Array per Spinner Tipo Portata -->
+    <!-- Array per Spinner categoria -->
     <string-array name="categoria">
         <item>Seleziona La Categoria</item>
         <item>Antipasto</item>

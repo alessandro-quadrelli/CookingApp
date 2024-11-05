@@ -23,7 +23,7 @@ import com.insubria.cookingapp.recipe.RecipeAdapter
 
 class HomeFragment : Fragment() {
 
-    private lateinit var spinnerTipologia: Spinner
+    //private lateinit var spinnerTipologia: Spinner
     private lateinit var spinnerTipoPortata: Spinner
     private lateinit var spinnerTempo: Spinner
     private lateinit var spinnerDifficolta: Spinner

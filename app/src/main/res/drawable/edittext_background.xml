@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+    <!-- Sfondo bianco -->
+    <item>
+        <shape android:shape="rectangle">
+            <solid android:color="@android:color/black" />
+        </shape>
+    </item>
+
+    <!-- Bordo inferiore nero -->
+    <item android:bottom="1dp">
+        <shape android:shape="rectangle">
+            <solid android:color="@android:color/white" />
+            <size android:height="2dp" /> <!-- Altezza della linea -->
+        </shape>
+    </item>
+</layer-list>
+
+
+
