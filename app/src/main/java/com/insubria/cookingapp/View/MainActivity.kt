@@ -58,7 +58,7 @@ class MainActivity : AppCompatActivity() {
             // Get the header view of the NavigationView and set the email
             val headerView = navView.getHeaderView(0)
             navHeaderTitle = headerView.findViewById(R.id.nav_header_title)
-            navHeaderTitle.text = currentUser.email ?: "Email non disponibile"
+            navHeaderTitle.text = currentUser.email?.uppercase() ?: "Email non disponibile"
         }
 
         // Navigation configuration

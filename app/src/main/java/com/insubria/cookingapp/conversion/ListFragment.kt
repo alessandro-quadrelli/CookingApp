@@ -1,21 +1,18 @@
 package com.insubria.cookingapp.conversion
 
-import android.content.Intent
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
 import android.text.Editable
 import android.text.TextWatcher
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Button
 import android.widget.EditText
-import android.widget.Toast
 import androidx.fragment.app.Fragment
 import com.insubria.cookingapp.R
 import com.insubria.cookingapp.utils.RecipeConversion
+import java.text.DecimalFormat
 
 class ListFragment : Fragment() {
 
@@ -30,22 +27,11 @@ class ListFragment : Fragment() {
     private lateinit var inputZucchero: EditText
     private lateinit var inputMiele: EditText
 
-    // Memorizziamo i TextWatcher
-    private lateinit var burroWatcher: TextWatcher
-    private lateinit var olioWatcher: TextWatcher
-    private lateinit var burroRicottaWatcher: TextWatcher
-    private lateinit var ricottaWatcher: TextWatcher
-    private lateinit var cucchiainoWatcher: TextWatcher
-    private lateinit var grammiWatcher: TextWatcher
-    private lateinit var bicchiereWatcher: TextWatcher
-    private lateinit var centilitriWatcher: TextWatcher
-    private lateinit var zuccheroWatcher: TextWatcher
-    private lateinit var mieleWatcher: TextWatcher
-
     private val recipeConversion = RecipeConversion()
     private val handler = Handler(Looper.getMainLooper())
     private val delayMillis: Long = 1000
     private var isUpdating = false  // Flag per evitare loop continui
+    private val decimalFormat = DecimalFormat("#.##")  // DecimalFormat per arrotondare a due decimali
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -65,103 +51,58 @@ class ListFragment : Fragment() {
         inputZucchero = view.findViewById(R.id.input_zucchero)
         inputMiele = view.findViewById(R.id.input_miele)
 
-        // Aggiungi i TextWatcher e salvali nelle variabili
-        burroWatcher = createTextWatcher(inputBurro, inputOlio, ::butterToOil)
-        olioWatcher = createTextWatcher(inputOlio, inputBurro, ::oilToButter)
-        burroRicottaWatcher = createTextWatcher(inputBurroRicotta, inputRicotta, ::butterToRicotta)
-        ricottaWatcher = createTextWatcher(inputRicotta, inputBurroRicotta, ::ricottaToButter)
-        cucchiainoWatcher = createTextWatcher(inputCucchiaino, inputGrammi, ::spoonToGrams)
-        grammiWatcher = createTextWatcher(inputGrammi, inputCucchiaino, ::gramsToSpoons)
-        bicchiereWatcher = createTextWatcher(inputBicchiere, inputCentilitri, ::glassToCentiliters)
-        centilitriWatcher = createTextWatcher(inputCentilitri, inputBicchiere, ::centilitersToGlass)
-        zuccheroWatcher = createTextWatcher(inputZucchero, inputMiele, ::sugarToHoney)
-        mieleWatcher = createTextWatcher(inputMiele, inputZucchero, ::honeyToSugar)
-
-        // Aggiungi i TextWatcher agli EditText
-        inputBurro.addTextChangedListener(burroWatcher)
-        inputOlio.addTextChangedListener(olioWatcher)
-        inputBurroRicotta.addTextChangedListener(burroRicottaWatcher)
-        inputRicotta.addTextChangedListener(ricottaWatcher)
-        inputCucchiaino.addTextChangedListener(cucchiainoWatcher)
-        inputGrammi.addTextChangedListener(grammiWatcher)
-        inputBicchiere.addTextChangedListener(bicchiereWatcher)
-        inputCentilitri.addTextChangedListener(centilitriWatcher)
-        inputZucchero.addTextChangedListener(zuccheroWatcher)
-        inputMiele.addTextChangedListener(mieleWatcher)
+        // Aggiungi TextWatcher direttamente agli EditText
+        addDebouncedTextWatcher(inputBurro, inputOlio) { value -> recipeConversion.butterToOil(value) }
+        addDebouncedTextWatcher(inputOlio, inputBurro) { value -> recipeConversion.oilToButter(value) }
+        addDebouncedTextWatcher(inputBurroRicotta, inputRicotta) { value -> recipeConversion.butterToRicotta(value) }
+        addDebouncedTextWatcher(inputRicotta, inputBurroRicotta) { value -> recipeConversion.ricottaToButter(value) }
+        addDebouncedTextWatcher(inputCucchiaino, inputGrammi) { value -> recipeConversion.spoonToGrams(value) }
+        addDebouncedTextWatcher(inputGrammi, inputCucchiaino) { value -> recipeConversion.gramsToSpoons(value) }
+        addDebouncedTextWatcher(inputBicchiere, inputCentilitri) { value -> recipeConversion.glassToCentiliters(value) }
+        addDebouncedTextWatcher(inputCentilitri, inputBicchiere) { value -> recipeConversion.centilitersToGlass(value) }
+        addDebouncedTextWatcher(inputZucchero, inputMiele) { value -> recipeConversion.sugarToHoney(value) }
+        addDebouncedTextWatcher(inputMiele, inputZucchero) { value -> recipeConversion.honeyToSugar(value) }
 
         return view
     }
 
-    // Funzione per creare il TextWatcher con debounce
-    private fun createTextWatcher(
+    // Aggiunge un TextWatcher con debounce direttamente all'EditText
+    private fun addDebouncedTextWatcher(
         input: EditText,
         output: EditText,
         conversionFunction: (Double) -> Double
-    ): TextWatcher {
-        return object : TextWatcher {
+    ) {
+        input.addTextChangedListener(object : TextWatcher {
             override fun afterTextChanged(s: Editable?) {
-                if (isUpdating || s.isNullOrEmpty()) return  // Evita loop infiniti se l'update è in corso
+                if (isUpdating || s.isNullOrEmpty()) return
 
-                handler.removeCallbacksAndMessages(input)  // Rimuovi gli aggiornamenti precedenti
+                handler.removeCallbacksAndMessages(input)
 
                 handler.postDelayed({
                     val inputValue = s.toString().toDoubleOrNull()
 
                     if (inputValue != null) {
-                        // Impedisce l'aggiornamento contemporaneo
                         isUpdating = true
-
-                        // Disabilita temporaneamente tutti i TextWatcher
-                        disableAllTextWatchers()
 
                         // Calcola il valore di conversione
                         val outputValue = conversionFunction(inputValue)
 
-                        // Imposta il valore nel campo di output
-                        output.setText(outputValue.toString())
+                        // Arrotonda il valore a due cifre decimali
+                        val formattedValue = decimalFormat.format(outputValue)
 
-                        // Riabilita i TextWatcher dopo l'aggiornamento
-                        enableAllTextWatchers()
+                        // Imposta il valore nell'output EditText
+                        output.setText(formattedValue)
 
                         isUpdating = false
                     } else {
-                        // Se il valore non è valido, pulisci l'output
                         output.setText("")
                     }
-                }, delayMillis)  // Debounce con ritardo
+                }, delayMillis)
             }
 
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {}
-        }
-    }
-
-    // Funzione per disabilitare tutti i TextWatcher
-    private fun disableAllTextWatchers() {
-        inputBurro.removeTextChangedListener(burroWatcher)
-        inputOlio.removeTextChangedListener(olioWatcher)
-        inputBurroRicotta.removeTextChangedListener(burroRicottaWatcher)
-        inputRicotta.removeTextChangedListener(ricottaWatcher)
-        inputCucchiaino.removeTextChangedListener(cucchiainoWatcher)
-        inputGrammi.removeTextChangedListener(grammiWatcher)
-        inputBicchiere.removeTextChangedListener(bicchiereWatcher)
-        inputCentilitri.removeTextChangedListener(centilitriWatcher)
-        inputZucchero.removeTextChangedListener(zuccheroWatcher)
-        inputMiele.removeTextChangedListener(mieleWatcher)
-    }
-
-    // Funzione per riabilitare tutti i TextWatcher
-    private fun enableAllTextWatchers() {
-        inputBurro.addTextChangedListener(burroWatcher)
-        inputOlio.addTextChangedListener(olioWatcher)
-        inputBurroRicotta.addTextChangedListener(burroRicottaWatcher)
-        inputRicotta.addTextChangedListener(ricottaWatcher)
-        inputCucchiaino.addTextChangedListener(cucchiainoWatcher)
-        inputGrammi.addTextChangedListener(grammiWatcher)
-        inputBicchiere.addTextChangedListener(bicchiereWatcher)
-        inputCentilitri.addTextChangedListener(centilitriWatcher)
-        inputZucchero.addTextChangedListener(zuccheroWatcher)
-        inputMiele.addTextChangedListener(mieleWatcher)
+        })
     }
 
     // Funzioni di conversione
@@ -205,17 +146,3 @@ class ListFragment : Fragment() {
         return recipeConversion.honeyToSugar(honeys)
     }
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-

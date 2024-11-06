@@ -13,7 +13,7 @@ class RecipeFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        val root = inflater.inflate(R.layout.fragment_recipe, container, false)
+        val root = inflater.inflate(R.layout.      fragment_recipe, container, false)
         return root
     }
 }
