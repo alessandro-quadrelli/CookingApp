@@ -7,7 +7,7 @@
     android:layout_margin="9dp"
     android:orientation="vertical"
     android:padding="8dp"
-    android:background="@color/orange">
+    android:background="@color/red">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"

@@ -124,7 +124,7 @@
         android:onClick="login"
         android:text="@string/signIn"
         android:textAlignment="center"
-        android:textColor="@color/orange"
+        android:textColor="@color/red"
         android:textSize="20sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
