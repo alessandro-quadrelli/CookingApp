@@ -10,7 +10,7 @@ data class Recipe(
     val category: String,
     val imageResId: Int,
     val description: String,
-    val ingredients: List<Ingredient>, // Lista di ingredienti
+    var ingredients: List<Ingredient>, // Lista di ingredienti
     val note: String
 ) : Parcelable {
     constructor(parcel: Parcel) : this(

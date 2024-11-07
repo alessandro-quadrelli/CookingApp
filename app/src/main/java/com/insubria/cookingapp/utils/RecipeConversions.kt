@@ -1,8 +1,9 @@
 package com.insubria.cookingapp.utils
 
 import com.insubria.cookingapp.entity.Ingrediente
+import com.insubria.cookingapp.recipe.Ingredient
 
-class RecipeConversion {
+class RecipeConversions {
 
     // Conversione Olio <-> Burro (1 parte di burro = 0.8 parti di olio)
     fun butterToOil(butterGrams: Double): Double {
@@ -50,12 +51,12 @@ class RecipeConversion {
         return honeyGrams / 0.7
     }
 
-    fun multiplyIngredientQuantities(ingredienti: List<Ingrediente>, numeroPersone: Int): List<Ingrediente> {
+    // Moltiplica la quantità per il numero di persone
+    fun multiplyIngredientQuantities(ingredienti: List<Ingredient>, numeroPersone: Int): List<Ingredient> {
         return ingredienti.map { ingrediente ->
-            ingrediente.copy(quantita = ingrediente.quantita * numeroPersone)
+            // Moltiplica la quantità per il numero di persone
+            val newQuantity = ingrediente.quantity * numeroPersone
+            ingrediente.copy(quantity = newQuantity)  // Restituisce una copia dell'ingrediente con la quantità aggiornata
         }
     }
-
-
-
 }
