@@ -30,7 +30,7 @@ class UpdateRecipeActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_add_recipe)
+        setContentView(R.layout.activity_update_recipe)
 
         spinnerCategory = findViewById(R.id.spinnerCategory)
         setupSpinner()

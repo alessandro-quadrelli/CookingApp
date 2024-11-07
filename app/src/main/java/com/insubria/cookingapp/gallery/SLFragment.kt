@@ -9,7 +9,9 @@ import android.widget.Button
 import android.widget.EditText
 import android.widget.Toast
 import androidx.fragment.app.Fragment
+import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.insubria.cookingapp.R
+import com.insubria.cookingapp.View.MainActivity
 
 class SLFragment : Fragment() {
 

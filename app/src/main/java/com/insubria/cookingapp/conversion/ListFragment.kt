@@ -10,7 +10,9 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.EditText
 import androidx.fragment.app.Fragment
+import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.insubria.cookingapp.R
+import com.insubria.cookingapp.View.MainActivity
 import com.insubria.cookingapp.utils.RecipeConversions
 import java.text.DecimalFormat
 

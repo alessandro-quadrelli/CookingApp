@@ -14,6 +14,7 @@ import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.appcompat.app.AppCompatActivity
+import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.insubria.cookingapp.R
 import com.insubria.cookingapp.auth.FirebaseAuthentication
 import com.insubria.cookingapp.databinding.ActivityMainBinding
@@ -24,6 +25,7 @@ class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
     private lateinit var logoutButton: Button
     private lateinit var navHeaderTitle: TextView
+    private lateinit var fab: FloatingActionButton
 
     private val auth: FirebaseAuthentication = FirebaseAuthentication()
 

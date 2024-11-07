@@ -10,35 +10,72 @@
     tools:context=".View.AddRecipeActivity">
 
     <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/constraintmaster"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:padding="16dp"
         android:background="@color/white">
 
-        <!-- Image Upload -->
-        <ImageView
-            android:id="@+id/imageViewRecipe"
+        <TextView
+            android:id="@+id/TextfieldModifyRecipe"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="Modifica Ricetta:"
+            android:textSize="40sp"
+            android:textColor="@color/black"
+            android:textAlignment="center"
+            android:fontFamily="@font/lobster_regular"
+            android:layout_marginBottom="16dp"
+            app:layout_constraintTop_toTopOf="@id/constraintmaster"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintBottom_toTopOf="@id/frameLayoutImage" />
+
+        <!-- FrameLayout for Image and "+" Text -->
+        <FrameLayout
+            android:id="@+id/frameLayoutImage"
             android:layout_width="0dp"
             android:layout_height="200dp"
-            android:scaleType="centerCrop"
-            android:background="@drawable/text_field_border"
-            app:layout_constraintEnd_toEndOf="parent"
+            android:layout_marginTop="10dp"
+            app:layout_constraintTop_toBottomOf="@id/TextfieldModifyRecipe"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintBottom_toTopOf="@id/buttonUploadImage"/>
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintBottom_toTopOf="@id/buttonUploadImage">
+
+            <!-- Image View -->
+            <ImageView
+                android:id="@+id/imageViewRecipe"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:scaleType="centerCrop"
+                android:background="@drawable/text_field_border" />
+
+            <!-- TextView with "+" -->
+            <TextView
+                android:id="@+id/plusTextView"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:text="+"
+                android:textSize="100sp"
+                android:gravity="center"
+                android:textColor="@android:color/white"
+                android:layout_gravity="center"
+                android:background="@android:color/black"
+                android:alpha="0.15" />
+        </FrameLayout>
 
         <Button
             android:id="@+id/buttonUploadImage"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="5dp"
+            android:layout_marginTop="10dp"
             android:text="Carica Immagine"
             android:textSize="11dp"
             android:background="@drawable/btn_bg_design"
             android:textStyle="bold"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/imageViewRecipe"
+            app:layout_constraintTop_toBottomOf="@id/frameLayoutImage"
             app:layout_constraintBottom_toTopOf="@id/editTextRecipeName"/>
 
         <!-- Recipe Name -->

@@ -14,7 +14,9 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.insubria.cookingapp.R
+import com.insubria.cookingapp.View.MainActivity
 import com.insubria.cookingapp.View.RecipeDetailActivity
 import com.insubria.cookingapp.databinding.FragmentHomeBinding
 import com.insubria.cookingapp.recipe.Ingredient
