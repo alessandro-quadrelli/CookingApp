@@ -4,31 +4,48 @@ import android.app.Activity
 import android.app.AlertDialog
 import android.content.Intent
 import android.graphics.Bitmap
+import android.net.Uri
 import android.os.Bundle
 import android.provider.MediaStore
 import android.view.LayoutInflater
 import android.view.View
-import android.widget.AdapterView
-import android.widget.ArrayAdapter
-import android.widget.Button
-import android.widget.ImageView
-import android.widget.LinearLayout
-import android.widget.Spinner
-import android.widget.Toast
-import androidx.activity.enableEdgeToEdge
+import android.widget.*
+import androidx.lifecycle.lifecycleScope
+import kotlinx.coroutines.launch
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.view.ViewCompat
-import androidx.core.view.WindowInsetsCompat
+import androidx.core.app.ActivityCompat
+import androidx.core.content.ContextCompat
+import androidx.core.view.children
 import com.insubria.cookingapp.R
+import com.insubria.cookingapp.entity.Ingrediente
+import com.insubria.cookingapp.entity.Ricetta
+import com.insubria.cookingapp.repository.RicettaRepository
+import com.insubria.cookingapp.utils.CookingAppDatabase
+import java.io.File
+import java.io.FileOutputStream
+import java.io.IOException
+import android.content.pm.PackageManager
+import android.Manifest
 
 class AddRecipeActivity : AppCompatActivity() {
 
     private val REQUEST_IMAGE_CAPTURE = 1
     private val REQUEST_GALLERY_IMAGE = 2
+    private val REQUEST_STORAGE_PERMISSION = 1001
     private lateinit var imageViewRecipe: ImageView
     private lateinit var linearLayoutIngredients: LinearLayout
     private lateinit var buttonAddIngredient: Button
     private lateinit var spinnerCategory: Spinner
+    private lateinit var bottoneSalvaRicetta: Button
+    private lateinit var ricetta : RicettaRepository
+    private lateinit var editTextRecipeName: EditText
+    private lateinit var editTextPreparationTime: EditText
+    private lateinit var ratingBarDifficulty: RatingBar
+    private lateinit var categoriaSelezionata: String
+    private lateinit var editTextDescription: EditText
+    private lateinit var editTextNotes: EditText
+    private var imageUri: String? = null
+    private val REQUEST_CAMERA_PERMISSION = 1002
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -47,42 +64,62 @@ class AddRecipeActivity : AppCompatActivity() {
 
         linearLayoutIngredients = findViewById(R.id.linearLayoutIngredients)
         buttonAddIngredient = findViewById(R.id.buttonAddIngredient)
+        editTextPreparationTime = findViewById(R.id.editTextPreparationTime)
+        ratingBarDifficulty = findViewById(R.id.ratingBarDifficulty)
 
         buttonAddIngredient.setOnClickListener {
             addIngredient()
         }
-    }
+        bottoneSalvaRicetta = findViewById(R.id.buttonSaveRecipe)
+        editTextRecipeName = findViewById(R.id.editTextRecipeName)
+        editTextDescription = findViewById(R.id.editTextDescription)
+        editTextNotes = findViewById(R.id.editTextNotes)
 
-    private fun setupSpinner() {
-        // Carica l'array di stringhe dal file strings.xml
-        val categories = resources.getStringArray(R.array.categoria)
-
-        // Crea un ArrayAdapter usando l'array di stringhe e un layout di default per il spinner
-        val adapter = ArrayAdapter(this, android.R.layout.simple_spinner_item, categories)
-        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
-
-        // Imposta l'adapter sullo spinner
-        spinnerCategory.adapter = adapter
-
-        // Aggiungi un listener per gestire le selezioni (opzionale)
-        spinnerCategory.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
-            override fun onItemSelected(parent: AdapterView<*>, view: View, position: Int, id: Long) {
-                //val selectedCategory = categories[position]
-                //Toast.makeText(this@AddRecipeActivity, "Selezionato: $selectedCategory", Toast.LENGTH_SHORT).show()
+        spinnerCategory.onItemSelectedListener = object: AdapterView.OnItemSelectedListener {
+            override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
+                categoriaSelezionata = parent?.getItemAtPosition(position).toString()
             }
 
-            override fun onNothingSelected(parent: AdapterView<*>) {
-                // Gestisci il caso in cui non viene selezionato nulla, obbligatorio mettere la categoria per i filtri
+            override fun onNothingSelected(parent: AdapterView<*>?) {
+                categoriaSelezionata = null.toString()
+            }
+        }
+        ricetta = RicettaRepository(CookingAppDatabase.getDatabase(this).ricettaDao())
+        bottoneSalvaRicetta.setOnClickListener {
+            val id = 0
+            val name = editTextRecipeName.text.toString()
+            val preparationTime = editTextPreparationTime.text.toString().trim().toIntOrNull() ?: 0
+            val difficulty = ratingBarDifficulty.rating.toInt()
+            val category = spinnerCategory.selectedItem.toString().trim()
+            val ingredientiViews = linearLayoutIngredients.children
+            val ingredienti = ingredientiViews.map { view ->
+                val ingredientName = view.findViewById<EditText>(R.id.textview_ingredient_name).text.toString()
+                val ingredientQuantity = view.findViewById<EditText>(R.id.edittextview_ingredient_quantity).text.toString().toFloatOrNull() ?: 0f
+                Ingrediente(nome = ingredientName, quantita = ingredientQuantity, ricettaId = 0)
+            }.toList()
+            val descrizione = editTextDescription.text.toString()
+            val note = editTextNotes.text.toString()
+            val foto = imageUri
+
+            val recipe =  Ricetta(id, name, preparationTime, difficulty, category, ingredienti, descrizione, note, foto)
+            lifecycleScope.launch {
+                ricetta.insert(recipe)
+                Toast.makeText(this@AddRecipeActivity, "Ricetta aggiunta con successo!", Toast.LENGTH_SHORT).show()
+                finish() // Chiudi l'attività dopo l'inserimento
             }
         }
     }
 
+    private fun setupSpinner() {
+        val categories = resources.getStringArray(R.array.categoria)
+        val adapter = ArrayAdapter(this, android.R.layout.simple_spinner_item, categories)
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+        spinnerCategory.adapter = adapter
+    }
+
     private fun addIngredient() {
-        // Inflate the ingredient item layout
         val inflater = getSystemService(LAYOUT_INFLATER_SERVICE) as LayoutInflater
         val ingredientView = inflater.inflate(R.layout.item_addingredient, null)
-
-        // Add the inflated layout to the LinearLayout
         linearLayoutIngredients.addView(ingredientView)
     }
 
@@ -100,15 +137,25 @@ class AddRecipeActivity : AppCompatActivity() {
     }
 
     private fun openCamera() {
-        val takePictureIntent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
-        if (takePictureIntent.resolveActivity(packageManager) != null) {
-            startActivityForResult(takePictureIntent, REQUEST_IMAGE_CAPTURE)
+        if (ContextCompat.checkSelfPermission(this, Manifest.permission.CAMERA)
+            != PackageManager.PERMISSION_GRANTED) {
+            ActivityCompat.requestPermissions(this, arrayOf(Manifest.permission.CAMERA), REQUEST_CAMERA_PERMISSION)
+        } else {
+            val takePictureIntent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
+            if (takePictureIntent.resolveActivity(packageManager) != null) {
+                startActivityForResult(takePictureIntent, REQUEST_IMAGE_CAPTURE)
+            }
         }
     }
 
     private fun openGallery() {
-        val galleryIntent = Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI)
-        startActivityForResult(galleryIntent, REQUEST_GALLERY_IMAGE)
+        if (ContextCompat.checkSelfPermission(this, Manifest.permission.READ_EXTERNAL_STORAGE)
+            != PackageManager.PERMISSION_GRANTED) {
+            ActivityCompat.requestPermissions(this, arrayOf(Manifest.permission.READ_EXTERNAL_STORAGE), REQUEST_STORAGE_PERMISSION)
+        } else {
+            val galleryIntent = Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI)
+            startActivityForResult(galleryIntent, REQUEST_GALLERY_IMAGE)
+        }
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
@@ -118,10 +165,47 @@ class AddRecipeActivity : AppCompatActivity() {
                 REQUEST_IMAGE_CAPTURE -> {
                     val imageBitmap = data?.extras?.get("data") as Bitmap
                     imageViewRecipe.setImageBitmap(imageBitmap)
+                    val uri = saveImageToInternalStorage(imageBitmap)
+                    imageUri = uri.toString()
                 }
                 REQUEST_GALLERY_IMAGE -> {
                     val selectedImageUri = data?.data
+                    imageUri = selectedImageUri?.toString()
                     imageViewRecipe.setImageURI(selectedImageUri)
+                }
+            }
+        }
+    }
+
+    private fun saveImageToInternalStorage(bitmap: Bitmap): Uri {
+        val filename = "recipe_${System.currentTimeMillis()}.png"
+        val file = File(filesDir, filename)
+        try {
+            val outputStream = FileOutputStream(file)
+            bitmap.compress(Bitmap.CompressFormat.PNG, 100, outputStream)
+            outputStream.flush()
+            outputStream.close()
+        } catch (e: IOException) {
+            e.printStackTrace()
+        }
+        return Uri.fromFile(file)
+    }
+
+    override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<out String>, grantResults: IntArray) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
+        when (requestCode) {
+            REQUEST_STORAGE_PERMISSION -> {
+                if (grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                    openGallery()
+                } else {
+                    Toast.makeText(this, "Permesso di lettura memoria esterna negato. Non potrai caricare immagini dalla galleria.", Toast.LENGTH_SHORT).show()
+                }
+            }
+            REQUEST_CAMERA_PERMISSION -> {
+                if (grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                    openCamera()
+                } else {
+                    Toast.makeText(this, "Permesso di utilizzo della fotocamera negato. Non potrai scattare foto.", Toast.LENGTH_SHORT).show()
                 }
             }
         }
@@ -129,24 +213,8 @@ class AddRecipeActivity : AppCompatActivity() {
 
     private fun setupLayoutSpinner() {
         val categories = resources.getStringArray(R.array.categoria)
-
-        // Crea un ArrayAdapter usando il layout personalizzato
         val adapter = ArrayAdapter(this, R.layout.spinner_item, categories)
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
-
         spinnerCategory.adapter = adapter
-
-        spinnerCategory.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
-            override fun onItemSelected(parent: AdapterView<*>, view: View, position: Int, id: Long) {
-                //val selectedCategory = categories[position]
-                //Toast.makeText(this@AddRecipeActivity, "Selezionato: $selectedCategory", Toast.LENGTH_SHORT).show()
-            }
-
-            override fun onNothingSelected(parent: AdapterView<*>) {
-                // Gestisci il caso in cui non viene selezionato nulla
-            }
-        }
     }
-
 }
-

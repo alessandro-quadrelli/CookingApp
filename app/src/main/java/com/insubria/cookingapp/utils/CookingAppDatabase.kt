@@ -4,12 +4,15 @@ import android.content.Context
 import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
+import androidx.room.TypeConverters
 import com.insubria.cookingapp.dao.IngredienteDao
 import com.insubria.cookingapp.dao.RicettaDao
 import com.insubria.cookingapp.entity.Ingrediente
+import com.insubria.cookingapp.entity.IngredientiTypeConverter
 import com.insubria.cookingapp.entity.Ricetta
 
-@Database(entities = [Ricetta::class, Ingrediente::class], version = 1, exportSchema = false)
+@Database(entities = [Ricetta::class, Ingrediente::class], version = 2, exportSchema = false)
+@TypeConverters(IngredientiTypeConverter::class)
 abstract class CookingAppDatabase : RoomDatabase() {
 
     abstract fun ricettaDao(): RicettaDao
@@ -31,4 +34,5 @@ abstract class CookingAppDatabase : RoomDatabase() {
             }
         }
     }
+
 }

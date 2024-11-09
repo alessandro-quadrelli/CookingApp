@@ -1,10 +1,13 @@
 package com.insubria.cookingapp.entity
 
+import android.os.Parcelable
 import androidx.room.Entity
 import androidx.room.ForeignKey
 import androidx.room.Index
 import androidx.room.PrimaryKey
+import kotlinx.android.parcel.Parcelize
 
+@Parcelize
 @Entity(
     tableName = "ingredienti",
     foreignKeys = [ForeignKey(
@@ -19,7 +22,6 @@ data class Ingrediente(
     @PrimaryKey(autoGenerate = true) val id: Int = 0,
     val nome: String,
     val quantita: Float,
-    val unita: String,
-    val ricettaId: Int
-)
+    var ricettaId: Int
+) : Parcelable
 

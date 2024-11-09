@@ -23,18 +23,6 @@ import kotlinx.coroutines.launch
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        var ingrediente = Ingrediente(0, "Olio", 2.3f, "2", 0)
-        var ingredienteRepo = IngredienteRepository(CookingAppDatabase.getDatabase(this).ingredienteDao())
-        lifecycleScope.launch {
-            ingredienteRepo.insert(ingrediente)
-            ingredienteRepo.getIngredientiByRicetta(0).observe(this@MainActivity, Observer { ingredienti ->
-                ingredienti?.let {
-                    it.forEach { ingrediente ->
-                        Log.d("TAG",ingrediente.toString())
-                    }
-                }
-            })
-        }
         setContent {
             CookingAppTheme {
                 Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->

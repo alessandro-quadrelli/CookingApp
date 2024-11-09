@@ -5,21 +5,26 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.AdapterView
 import android.widget.ArrayAdapter
+import android.widget.Button
+import android.widget.EditText
 import android.widget.LinearLayout
 import android.widget.Spinner
 import android.widget.TextView
 import androidx.cardview.widget.CardView
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.insubria.cookingapp.R
 import com.insubria.cookingapp.View.RecipeDetailActivity
 import com.insubria.cookingapp.databinding.FragmentHomeBinding
-import com.insubria.cookingapp.recipe.Ingredient
-import com.insubria.cookingapp.recipe.Recipe
+import com.insubria.cookingapp.entity.Ricetta
 import com.insubria.cookingapp.recipe.RecipeAdapter
+import com.insubria.cookingapp.repository.RicettaRepository
+import com.insubria.cookingapp.utils.CookingAppDatabase
 
 class HomeFragment : Fragment() {
 
@@ -30,7 +35,16 @@ class HomeFragment : Fragment() {
     private lateinit var dropdownContent: LinearLayout
     private lateinit var recipeAdapter: RecipeAdapter
     private lateinit var recyclerView: RecyclerView
-    private val recipes = mutableListOf(
+    private var tipoRicettaSelezionato: String? = null
+    private var tempoSelezionato: Int? = null
+    private var difficoltaSelezionata: Int? = null
+    private lateinit var buttonCerca: Button
+    private lateinit var ricetta: RicettaRepository
+    private lateinit var cercaGlobale : EditText
+
+
+    private var recipes = mutableListOf<Ricetta>()
+    /* private val recipes =mutableListOf(
         Recipe(
             name = "Spaghetti alla Carbonara",
             prepTime = "20 min",
@@ -69,7 +83,7 @@ class HomeFragment : Fragment() {
             note = "Usa sempre brodo caldo per una cottura uniforme."
         ),
         // Aggiungi altre ricette qui: da implementare l'aggiunta dinamica
-    )
+    )*/
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -82,62 +96,62 @@ class HomeFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        // Inizializza gli Spinner con view.findViewById
+        cercaGlobale = view.findViewById(R.id.edittext_cerca_globale)
+
+        // Inizializza il repository
+        ricetta = RicettaRepository(CookingAppDatabase.getDatabase(requireContext()).ricettaDao())
+
+        // Inizializza la RecyclerView
+        recyclerView = view.findViewById(R.id.recyclerview_ricette)
+        recyclerView.layoutManager = LinearLayoutManager(requireContext())
+        recipeAdapter = RecipeAdapter(recipes) { recipe ->
+            openRecipeDetail(recipe)
+        }
+        recyclerView.adapter = recipeAdapter
+
+        // Osserva le ricette dal database
+        ricetta.getAllRicette.observe(viewLifecycleOwner, Observer { ricette ->
+            if (ricette != null) {
+                recipes.clear()
+                recipes.addAll(ricette)
+                recipeAdapter.notifyDataSetChanged()
+            }
+        })
+
+        // Configura gli Spinner
         spinnerTipoPortata = view.findViewById(R.id.spinner_categoria)
         spinnerTempo = view.findViewById(R.id.spinner_tempo)
         spinnerDifficolta = view.findViewById(R.id.spinner_difficolta)
         dropdownContent = view.findViewById(R.id.dropdown_content)
 
-        // Set Adapter per ogni Spinner
         setupSpinner(spinnerTipoPortata, R.array.categoria)
         setupSpinner(spinnerTempo, R.array.tempi)
         setupSpinner(spinnerDifficolta, R.array.difficolta)
 
-        // Gestisci espansione del layout
+        // Configura il bottone di ricerca
+        buttonCerca = view.findViewById(R.id.button_cerca)
+        buttonCerca.setOnClickListener {
+            cercaRicette()
+        }
+
+        // Gestisci l'espansione del layout
         val dropdownHeader = view.findViewById<CardView>(R.id.dropdown_header)
         dropdownHeader.setOnClickListener {
-            // Controlla visibilità e alterna tra VISIBLE e GONE
-            if (dropdownContent.visibility == View.GONE) {
-                dropdownContent.visibility = View.VISIBLE
-            } else {
-                dropdownContent.visibility = View.GONE
-            }
+            dropdownContent.visibility = if (dropdownContent.visibility == View.GONE) View.VISIBLE else View.GONE
         }
-
-        val portataAdapter = ArrayAdapter.createFromResource(
-            requireContext(),
-            R.array.categoria,
-            android.R.layout.simple_spinner_item
-        )
-        portataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
-        spinnerTipoPortata.adapter = portataAdapter
-
-        val tempoAdapter = ArrayAdapter.createFromResource(
-            requireContext(),
-            R.array.tempi,
-            android.R.layout.simple_spinner_item
-        )
-        tempoAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
-        spinnerTempo.adapter = tempoAdapter
-
-        val difficoltaAdapter = ArrayAdapter.createFromResource(
-            requireContext(),
-            R.array.difficolta,
-            android.R.layout.simple_spinner_item
-        )
-        difficoltaAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
-        spinnerDifficolta.adapter = difficoltaAdapter
-
-        recyclerView = view.findViewById(R.id.recyclerview_ricette)
-
-        recipeAdapter = RecipeAdapter(recipes) { recipe ->
-            // Gestione del clic su un elemento: apri RecipeDetailActivity
-            openRecipeDetail(recipe)
-        }
-
-        recyclerView.layoutManager = LinearLayoutManager(requireContext())
-        recyclerView.adapter = recipeAdapter
     }
+
+    private fun cercaRicette() {
+        var testoRicerca: String? = cercaGlobale.text.toString().trim()
+        if (testoRicerca.isNullOrEmpty()) testoRicerca = null
+        val ricette = ricetta.searchRicetta(testoRicerca, tipoRicettaSelezionato, difficoltaSelezionata, tempoSelezionato)
+        ricette.observe(viewLifecycleOwner, Observer { receipes ->
+            recipes.clear()
+            recipes.addAll(receipes)
+            recipeAdapter.notifyDataSetChanged()
+        })
+    }
+
     private fun setupSpinner(spinner: Spinner, arrayResId: Int) {
         val adapter = ArrayAdapter.createFromResource(
             requireContext(),
@@ -148,15 +162,16 @@ class HomeFragment : Fragment() {
         spinner.adapter = adapter
     }
 
-    private fun openRecipeDetail(recipe: Recipe) {
+    private fun openRecipeDetail(recipe: Ricetta) {
         val intent = Intent(requireContext(), RecipeDetailActivity::class.java).apply {
-            putExtra("recipe", recipe) // Ora può passare l'oggetto Recipe
+            putExtra("recipe", recipe) // Ora puoi passare l'oggetto Ricetta
         }
         startActivity(intent)
     }
     // Aggiungi una nuova ricetta
-    fun addNewRecipe(recipe: Recipe) {
+    fun addNewRecipe(recipe: Ricetta) {
         recipes.add(recipe) // Aggiungi la ricetta
         recipeAdapter.notifyDataSetChanged() // Notifica l'adapter
     }
+
 }

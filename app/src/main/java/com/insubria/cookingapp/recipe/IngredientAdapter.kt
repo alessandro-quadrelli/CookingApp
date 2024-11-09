@@ -8,15 +8,15 @@ import androidx.recyclerview.widget.RecyclerView
 import com.insubria.cookingapp.R
 import com.insubria.cookingapp.entity.Ingrediente
 
-class IngredientAdapter(private var ingredients: List<Ingredient>) : RecyclerView.Adapter<IngredientAdapter.ViewHolder>() {
+class IngredientAdapter(private var ingredients: List<Ingrediente>) : RecyclerView.Adapter<IngredientAdapter.ViewHolder>() {
 
     class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         val ingredientName: TextView = itemView.findViewById(R.id.textview_ingredient_name)
         val ingredientQuantity: TextView = itemView.findViewById(R.id.textview_ingredient_quantity)
 
-        fun bind(ingredient: Ingredient) {
-            ingredientName.text = ingredient.name
-            ingredientQuantity.text = ingredient.quantity.toString()
+        fun bind(ingredient: Ingrediente) {
+            ingredientName.text = ingredient.nome
+            ingredientQuantity.text = ingredient.quantita.toString()
         }
     }
 
@@ -27,14 +27,14 @@ class IngredientAdapter(private var ingredients: List<Ingredient>) : RecyclerVie
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val ingredient = ingredients[position]
-        holder.ingredientName.text = ingredient.name
-        holder.ingredientQuantity.text = ingredient.quantity.toString()
+        holder.ingredientName.text = ingredient.nome
+        holder.ingredientQuantity.text = ingredient.quantita.toString()
     }
 
     override fun getItemCount() = ingredients.size
 
     // Funzione per aggiornare gli ingredienti con le nuove quantità
-    fun updateIngredients(newIngredients: List<Ingredient>) {
+    fun updateIngredients(newIngredients: List<Ingrediente>) {
         ingredients = newIngredients
         notifyDataSetChanged()
     }

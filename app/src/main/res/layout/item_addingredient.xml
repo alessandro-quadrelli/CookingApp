@@ -16,7 +16,7 @@
         android:maxLength="50"
         android:background="@drawable/edittext_background"
         android:textCursorDrawable="@drawable/cursor_color"
-        app:layout_constraintEnd_toStartOf="@+id/textview_ingredient_quantity"
+        app:layout_constraintEnd_toStartOf="@+id/edittextview_ingredient_quantity"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
@@ -24,7 +24,7 @@
         app:layout_constraintWidth_percent="0.4" />
 
     <EditText
-        android:id="@+id/textview_ingredient_quantity"
+        android:id="@+id/edittextview_ingredient_quantity"
         android:layout_width="100dp"
         android:layout_height="wrap_content"
         android:textColor="@color/black"
@@ -47,7 +47,7 @@
         android:text="g"
         android:textColor="@color/black"
         android:textSize="16sp"
-        app:layout_constraintStart_toEndOf="@id/textview_ingredient_quantity"
+        app:layout_constraintStart_toEndOf="@id/edittextview_ingredient_quantity"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"

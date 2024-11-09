@@ -6,13 +6,15 @@ import androidx.room.Delete
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
+import androidx.room.Transaction
 import androidx.room.Update
+import com.insubria.cookingapp.entity.Ingrediente
 import com.insubria.cookingapp.entity.Ricetta
 
 @Dao
 interface RicettaDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    suspend fun insert(ricetta: Ricetta)
+    suspend fun insert(ricetta: Ricetta): Long
 
     @Update
     suspend fun update(ricetta: Ricetta)
@@ -33,20 +35,21 @@ interface RicettaDao {
     fun searchRicetteByName(nome: String): LiveData<List<Ricetta>>
 
     @Query("""
-    SELECT DISTINCT r.* FROM ricette r
-    LEFT JOIN ingredienti i ON r.id = i.ricettaId
-    WHERE (:nome IS NULL OR r.nome LIKE '%' || :nome || '%')
-    AND (:categoria IS NULL OR r.categoria = :categoria)
-    AND (:difficolta IS NULL OR r.difficolta = :difficolta)
-    AND (:tempo IS NULL OR r.tempoPreparazione <= :tempo)
-    AND (:ingredienti IS NULL OR i.nome IN (:ingredienti))
+SELECT DISTINCT r.* FROM ricette r
+LEFT JOIN ingredienti i ON r.id = i.ricettaId
+WHERE (:nome IS NULL OR r.nome LIKE '%' || :nome || '%')
+AND (:categoria IS NULL OR r.categoria = :categoria)
+AND (:difficolta IS NULL OR r.difficolta = :difficolta)
+AND (:tempo IS NULL OR r.tempoPreparazione <= :tempo)
+AND (:ingredienti IS NULL OR i.nome IN (:ingredienti))
 """)
     fun searchRecipes(
         nome: String? = null,
         categoria: String? = null,
-        difficolta: String? = null,
+        difficolta: Int? = null,
         tempo: Int? = null,
         ingredienti: List<String>? = null
     ): LiveData<List<Ricetta>>
+
 
 }

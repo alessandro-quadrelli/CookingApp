@@ -1,7 +1,6 @@
 package com.insubria.cookingapp.utils
 
 import com.insubria.cookingapp.entity.Ingrediente
-import com.insubria.cookingapp.recipe.Ingredient
 
 class RecipeConversions {
 
@@ -52,11 +51,11 @@ class RecipeConversions {
     }
 
     // Moltiplica la quantità per il numero di persone
-    fun multiplyIngredientQuantities(ingredienti: List<Ingredient>, numeroPersone: Int): List<Ingredient> {
+    fun multiplyIngredientQuantities(ingredienti: List<Ingrediente>, numeroPersone: Int): List<Ingrediente> {
         return ingredienti.map { ingrediente ->
             // Moltiplica la quantità per il numero di persone
-            val newQuantity = ingrediente.quantity * numeroPersone
-            ingrediente.copy(quantity = newQuantity)  // Restituisce una copia dell'ingrediente con la quantità aggiornata
+            val newQuantity = ingrediente.quantita * numeroPersone
+            ingrediente.copy(quantita = newQuantity)  // Restituisce una copia dell'ingrediente con la quantità aggiornata
         }
     }
 }

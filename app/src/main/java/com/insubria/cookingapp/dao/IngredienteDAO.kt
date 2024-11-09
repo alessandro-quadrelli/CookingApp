@@ -11,8 +11,12 @@ import com.insubria.cookingapp.entity.Ingrediente
 
 @Dao
 interface IngredienteDao {
+
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insert(ingrediente: Ingrediente)
+
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    suspend fun insertAll(ingredienti: List<Ingrediente>)
 
     @Update
     suspend fun update(ingrediente: Ingrediente)

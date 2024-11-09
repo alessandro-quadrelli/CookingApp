@@ -1,4 +1,3 @@
-<?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
@@ -10,20 +9,20 @@
     <!-- EditText aggiunta sopra il LinearLayout -->
     <EditText
         android:id="@+id/edittext_cerca_globale"
-        android:layout_width="300dp"
-        android:layout_height="wrap_content"
+        android:layout_width="379dp"
+        android:layout_height="38dp"
+        android:layout_margin="6dp"
         android:background="@drawable/search_bg"
         android:drawableLeft="@drawable/baseline_search_24"
         android:fontFamily="serif"
         android:hint="Cerca le tue ricette!"
         android:padding="10dp"
-        android:textColorHint="@color/white"
         android:textColor="@color/white"
+        android:textColorHint="@color/white"
         android:textSize="16dp"
-        android:layout_margin="6dp"
-        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent" />
+        app:layout_constraintTop_toTopOf="parent" />
 
     <LinearLayout
         xmlns:android="http://schemas.android.com/apk/res/android"

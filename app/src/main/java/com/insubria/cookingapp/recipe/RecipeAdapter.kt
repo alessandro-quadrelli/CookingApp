@@ -1,5 +1,6 @@
 package com.insubria.cookingapp.recipe
 
+import android.net.Uri
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -8,11 +9,14 @@ import android.widget.RatingBar
 import android.widget.TextView
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
 import com.insubria.cookingapp.R
+import com.insubria.cookingapp.entity.Ricetta
+import java.io.File
 
 class RecipeAdapter(
-    private val recipes: List<Recipe>,
-    private val onClick: (Recipe) -> Unit
+    private val recipes: List<Ricetta>,
+    private val onClick: (Ricetta) -> Unit
 ) : RecyclerView.Adapter<RecipeAdapter.RecipeViewHolder>() {
 
     class RecipeViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
@@ -30,18 +34,22 @@ class RecipeAdapter(
 
     override fun onBindViewHolder(holder: RecipeViewHolder, position: Int) {
         val recipe = recipes[position]
-        // Popola i dati
-        holder.nameTextView.text = recipe.name
-        holder.prepTimeTextView.text = recipe.prepTime
-        holder.difficultyRatingBar.rating = recipe.difficulty.toFloat()
 
-        // Carica l’immagine
-        holder.imageView.setImageResource(recipe.imageResId)
+        // Popola i dati
+        holder.nameTextView.text = recipe.nome
+        holder.prepTimeTextView.text = recipe.tempoPreparazione.toString()
+        holder.difficultyRatingBar.rating = recipe.difficolta.toFloat()
+
+        // Carica l’immagine dalla posizione locale usando Glide
+        val imagePath = recipe.imageUrl
+            val imageUri = Uri.parse(imagePath)
+            Glide.with(holder.itemView.context)
+                .load(imageUri)
+                .into(holder.imageView)
 
         holder.itemView.setOnClickListener { onClick(recipe) }
     }
 
     override fun getItemCount() = recipes.size
 }
-
 

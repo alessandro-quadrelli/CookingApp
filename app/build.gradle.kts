@@ -54,7 +54,7 @@ dependencies {
     implementation(platform("com.google.firebase:firebase-bom:33.4.0"))
     implementation("com.google.firebase:firebase-analytics")
     implementation("androidx.activity:activity-compose:1.7.2")
-
+    implementation ("com.google.code.gson:gson:2.10.1")
     // Dipendenze per Room
     implementation("androidx.room:room-runtime:2.6.1")
     implementation(libs.firebase.auth.ktx)
@@ -96,4 +96,8 @@ dependencies {
 
     implementation ("androidx.cardview:cardview:1.0.0")
     implementation ("androidx.recyclerview:recyclerview:1.2.1")
+
+    implementation ("com.github.bumptech.glide:glide:4.12.0")
+    annotationProcessor ("com.github.bumptech.glide:compiler:4.12.0")
+
 }
