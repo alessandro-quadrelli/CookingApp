@@ -1,11 +1,13 @@
 package com.insubria.cookingapp.View
 
 import android.annotation.SuppressLint
+import android.app.AlertDialog
 import android.content.ClipData
 import android.content.ClipboardManager
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.widget.Button
 import android.widget.EditText
 import android.widget.ImageView
@@ -13,14 +15,18 @@ import android.widget.RatingBar
 import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.insubria.cookingapp.R
+import com.insubria.cookingapp.dao.RicettaDao
 import com.insubria.cookingapp.entity.Ingrediente
 import com.insubria.cookingapp.entity.Ricetta
 import com.insubria.cookingapp.recipe.IngredientAdapter
+import com.insubria.cookingapp.utils.CookingAppDatabase
 import com.insubria.cookingapp.utils.RecipeConversions
+import kotlinx.coroutines.launch
 
 class RecipeDetailActivity : AppCompatActivity() {
 
@@ -28,6 +34,7 @@ class RecipeDetailActivity : AppCompatActivity() {
     private lateinit var ingredientAdapter: IngredientAdapter
     private lateinit var originalIngredients: List<Ingrediente>  // Variabile per tenere traccia degli ingredienti originali
     private val recipeConversion = RecipeConversions()
+    private lateinit var ricettaDao: RicettaDao
 
     @SuppressLint("MissingInflatedId")
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -101,6 +108,41 @@ class RecipeDetailActivity : AppCompatActivity() {
             } else {
                 // Gestione del caso in cui l'utente non inserisce un numero valido
                 Toast.makeText(this, "Inserisci un numero valido di persone", Toast.LENGTH_SHORT).show()
+            }
+        }
+        // Imposta la logica per il bottone deleteButton
+        val deleteButton = findViewById<Button>(R.id.deleteButton)
+        deleteButton.setOnClickListener {
+            AlertDialog.Builder(this)
+                .setTitle("Eliminare la ricetta?")
+                .setMessage("Sei sicuro di voler eliminare questa ricetta?")
+                .setPositiveButton("Sì") { dialog, _ ->
+                    deleteRecipe(recipe)
+                    dialog.dismiss()
+                }
+                .setNegativeButton("No") { dialog, _ ->
+                    dialog.dismiss()
+                }
+                .show()
+        }
+        val database = CookingAppDatabase.getDatabase(applicationContext)
+        ricettaDao = database.ricettaDao()
+    }
+
+    private fun deleteRecipe(ricetta: Ricetta) {
+        lifecycleScope.launch {
+            try {
+                val existingRicetta = ricettaDao.getRicettaById(ricetta.id)
+                if (existingRicetta == null) {
+                    Toast.makeText(this@RecipeDetailActivity, "Ricetta non trovata", Toast.LENGTH_SHORT).show()
+                    return@launch
+                }
+                ricettaDao.delete(ricetta)
+                Toast.makeText(this@RecipeDetailActivity, "Ricetta eliminata", Toast.LENGTH_SHORT).show()
+                finish()
+
+            } catch (e: Exception) {
+                Toast.makeText(this@RecipeDetailActivity, "Errore nell'eliminazione della ricetta", Toast.LENGTH_SHORT).show()
             }
         }
     }
