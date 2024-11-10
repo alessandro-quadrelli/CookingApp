@@ -35,18 +35,25 @@ class RecipeAdapter(
     override fun onBindViewHolder(holder: RecipeViewHolder, position: Int) {
         val recipe = recipes[position]
 
-        // Popola i dati
-        holder.nameTextView.text = recipe.nome
-        holder.prepTimeTextView.text = recipe.tempoPreparazione.toString()
+        // Popola i dati di base
+        holder.nameTextView.text = "Titolo:  ${recipe.nome}"
+        holder.prepTimeTextView.text = "${recipe.tempoPreparazione} min"
         holder.difficultyRatingBar.rating = recipe.difficolta.toFloat()
 
-        // Carica l’immagine dalla posizione locale usando Glide
-        val imagePath = recipe.imageUrl
-            val imageUri = Uri.parse(imagePath)
+        // Gestisci il caricamento dell'immagine
+        if (!recipe.imageUrl.isNullOrEmpty()) {
+            val imagePath = Uri.parse(recipe.imageUrl)
             Glide.with(holder.itemView.context)
-                .load(imageUri)
+                .load(imagePath)
+                .placeholder(R.drawable.default_image) // Immagine di placeholder mentre si carica
+                .error(R.drawable.default_image) // Immagine di default in caso di errore
                 .into(holder.imageView)
+        } else {
+            // Se l'URL dell'immagine è nullo o vuoto, usa l'immagine di default
+            holder.imageView.setImageResource(R.drawable.default_image)
+        }
 
+        // Gestisci il clic sull'elemento della lista
         holder.itemView.setOnClickListener { onClick(recipe) }
     }
 
