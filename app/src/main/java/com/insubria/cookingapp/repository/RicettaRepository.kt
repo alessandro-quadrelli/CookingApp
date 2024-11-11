@@ -2,7 +2,6 @@ package com.insubria.cookingapp.repository
 
 import androidx.lifecycle.LiveData
 import com.insubria.cookingapp.dao.RicettaDao
-import com.insubria.cookingapp.entity.Ingrediente
 import com.insubria.cookingapp.entity.Ricetta
 
 class RicettaRepository(private val ricettaDao: RicettaDao) {

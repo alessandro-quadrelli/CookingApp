@@ -12,7 +12,7 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/constraintmaster"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:padding="16dp"
         android:background="@color/white">
 
@@ -39,10 +39,10 @@
             app:layout_constraintTop_toBottomOf="@id/TextfieldModifyRecipe"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintBottom_toTopOf="@id/buttonUploadImage">
+            app:layout_constraintBottom_toTopOf="@id/buttonUploadImageUpdate">
             <!-- Image View -->
             <ImageView
-                android:id="@+id/imageViewRecipe"
+                android:id="@+id/imageViewRecipeUpdate"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:scaleType="centerCrop"
@@ -62,7 +62,7 @@
         </FrameLayout>
 
         <Button
-            android:id="@+id/buttonUploadImage"
+            android:id="@+id/buttonUploadImageUpdate"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
@@ -73,11 +73,11 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/frameLayoutImage"
-            app:layout_constraintBottom_toTopOf="@id/editTextRecipeName"/>
+            app:layout_constraintBottom_toTopOf="@id/editTextRecipeNameUpdate"/>
 
         <!-- Recipe Name -->
         <EditText
-            android:id="@+id/editTextRecipeName"
+            android:id="@+id/editTextRecipeNameUpdate"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:hint="Nome della Ricetta"
@@ -85,14 +85,14 @@
             android:textCursorDrawable="@drawable/cursor_color"
             android:layout_marginTop="10dp"
             android:maxLength="50"
-            app:layout_constraintTop_toBottomOf="@id/buttonUploadImage"
+            app:layout_constraintTop_toBottomOf="@id/buttonUploadImageUpdate"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintBottom_toTopOf="@id/textViewDifficulty"/>
+            app:layout_constraintBottom_toTopOf="@id/textViewDifficultyUpdate"/>
 
         <!-- Difficulty -->
         <TextView
-            android:id="@+id/textViewDifficulty"
+            android:id="@+id/textViewDifficultyUpdate"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Difficoltà:"
@@ -100,12 +100,12 @@
             android:textStyle="bold"
             android:textColor="@color/black"
             android:layout_marginTop="5dp"
-            app:layout_constraintTop_toBottomOf="@id/editTextRecipeName"
+            app:layout_constraintTop_toBottomOf="@id/editTextRecipeNameUpdate"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintBottom_toTopOf="@id/ratingBarDifficulty"/>
+            app:layout_constraintBottom_toTopOf="@id/ratingBarDifficultyUpdate"/>
 
         <RatingBar
-            android:id="@+id/ratingBarDifficulty"
+            android:id="@+id/ratingBarDifficultyUpdate"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:numStars="5"
@@ -116,23 +116,23 @@
             style="@style/CustomRatingBar"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/textViewDifficulty"
-            app:layout_constraintBottom_toTopOf="@id/spinnerCategory"/>
+            app:layout_constraintTop_toBottomOf="@id/textViewDifficultyUpdate"
+            app:layout_constraintBottom_toTopOf="@id/spinnerCategoryUpdate"/>
 
         <!-- Category -->
         <Spinner
-            android:id="@+id/spinnerCategory"
+            android:id="@+id/spinnerCategoryUpdate"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="5dp"
             android:spinnerMode="dropdown"
-            app:layout_constraintTop_toBottomOf="@id/ratingBarDifficulty"
+            app:layout_constraintTop_toBottomOf="@id/ratingBarDifficultyUpdate"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintBottom_toTopOf="@id/editTextPreparationTime"/>
+            app:layout_constraintBottom_toTopOf="@id/editTextPreparationTimeUpdate"/>
 
         <TextView
-            android:id="@+id/textViewPreparationTime"
+            android:id="@+id/textViewPreparationTimeUpdate"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:text="Tempo (minuti):"
@@ -140,13 +140,13 @@
             android:textSize="15dp"
             android:textStyle="bold"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toStartOf="@id/editTextPreparationTime"
-            app:layout_constraintTop_toBottomOf="@id/spinnerCategory"
-            app:layout_constraintBottom_toTopOf="@id/editTextDescription"/>
+            app:layout_constraintEnd_toStartOf="@id/editTextPreparationTimeUpdate"
+            app:layout_constraintTop_toBottomOf="@id/spinnerCategoryUpdate"
+            app:layout_constraintBottom_toTopOf="@id/editTextDescriptionUpdate"/>
 
         <!-- Preparation Time -->
         <EditText
-            android:id="@+id/editTextPreparationTime"
+            android:id="@+id/editTextPreparationTimeUpdate"
             android:layout_width="100dp"
             android:layout_height="wrap_content"
             android:inputType="number"
@@ -155,14 +155,14 @@
             android:textCursorDrawable="@drawable/cursor_color"
             android:textAlignment="center"
             android:maxLength="4"
-            app:layout_constraintTop_toBottomOf="@id/spinnerCategory"
-            app:layout_constraintStart_toEndOf="@id/textViewPreparationTime"
+            app:layout_constraintTop_toBottomOf="@id/spinnerCategoryUpdate"
+            app:layout_constraintStart_toEndOf="@id/textViewPreparationTimeUpdate"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintBottom_toTopOf="@id/editTextDescription"/>
+            app:layout_constraintBottom_toTopOf="@id/editTextDescriptionUpdate"/>
 
         <!-- Description -->
         <EditText
-            android:id="@+id/editTextDescription"
+            android:id="@+id/editTextDescriptionUpdate"
             android:layout_width="match_parent"
             android:layout_height="200dp"
             android:gravity="top"
@@ -175,14 +175,14 @@
             android:paddingEnd="10dp"
             android:background="@drawable/text_field_border"
             android:textCursorDrawable="@drawable/cursor_color"
-            app:layout_constraintTop_toBottomOf="@id/editTextPreparationTime"
+            app:layout_constraintTop_toBottomOf="@id/editTextPreparationTimeUpdate"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintBottom_toTopOf="@id/textViewIngredients"/>
+            app:layout_constraintBottom_toTopOf="@id/textViewIngredientsUpdate"/>
 
         <!-- Ingredients -->
         <TextView
-            android:id="@+id/textViewIngredients"
+            android:id="@+id/textViewIngredientsUpdate"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Ingredienti:"
@@ -190,23 +190,23 @@
             android:textSize="15dp"
             android:textStyle="bold"
             android:layout_marginTop="5dp"
-            app:layout_constraintTop_toBottomOf="@id/editTextDescription"
+            app:layout_constraintTop_toBottomOf="@id/editTextDescriptionUpdate"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintBottom_toTopOf="@id/linearLayoutIngredients"/>
+            app:layout_constraintBottom_toTopOf="@id/linearLayoutIngredientsUpdate"/>
 
         <!-- Dynamic Ingredients Section -->
         <LinearLayout
-            android:id="@+id/linearLayoutIngredients"
+            android:id="@+id/linearLayoutIngredientsUpdate"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-            app:layout_constraintTop_toBottomOf="@id/textViewIngredients"
+            app:layout_constraintTop_toBottomOf="@id/textViewIngredientsUpdate"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent" />
 
         <!-- Button to Add Ingredient -->
         <Button
-            android:id="@+id/buttonAddIngredient"
+            android:id="@+id/buttonAddIngredientUpdate"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Aggiungi Ingrediente"
@@ -216,12 +216,12 @@
             android:layout_marginTop="5dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/linearLayoutIngredients"
-            app:layout_constraintBottom_toTopOf="@id/editTextNotes"/>
+            app:layout_constraintTop_toBottomOf="@id/linearLayoutIngredientsUpdate"
+            app:layout_constraintBottom_toTopOf="@id/editTextNotesUpdate"/>
 
         <!-- Additional Notes -->
         <EditText
-            android:id="@+id/editTextNotes"
+            android:id="@+id/editTextNotesUpdate"
             android:layout_width="0dp"
             android:layout_height="200dp"
             android:gravity="top"
@@ -234,16 +234,16 @@
             android:paddingEnd="10dp"
             android:background="@drawable/text_field_border"
             android:textCursorDrawable="@drawable/cursor_color"
-            app:layout_constraintTop_toBottomOf="@id/buttonAddIngredient"
+            app:layout_constraintTop_toBottomOf="@id/buttonAddIngredientUpdate"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintBottom_toTopOf="@id/buttonSaveRecipe"/>
+            app:layout_constraintBottom_toTopOf="@id/buttonUpdateRecipe"/>
 
         <Button
-            android:id="@+id/buttonSaveRecipe"
+            android:id="@+id/buttonUpdateRecipe"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Salva Ricetta"
+            android:text="Modifica Ricetta"
             android:background="@drawable/btn_bg_design"
             android:textSize="11dp"
             android:textStyle="bold"
@@ -251,6 +251,6 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/editTextNotes" />
+            app:layout_constraintTop_toBottomOf="@id/editTextNotesUpdate" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 </ScrollView>

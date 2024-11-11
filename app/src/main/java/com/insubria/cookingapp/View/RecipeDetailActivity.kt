@@ -1,19 +1,19 @@
 package com.insubria.cookingapp.View
 
 import android.annotation.SuppressLint
-import android.app.AlertDialog
+import android.app.Activity
 import android.content.ClipData
 import android.content.ClipboardManager
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
+
 import android.widget.Button
 import android.widget.EditText
-import android.widget.ImageView
 import android.widget.RatingBar
 import android.widget.TextView
 import android.widget.Toast
+import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -30,6 +30,7 @@ import kotlinx.coroutines.launch
 
 class RecipeDetailActivity : AppCompatActivity() {
 
+    private val REQUEST_CODE_UPDATE_RECIPE = 1
     private lateinit var recipe: Ricetta
     private lateinit var ingredientAdapter: IngredientAdapter
     private lateinit var originalIngredients: List<Ingrediente>  // Variabile per tenere traccia degli ingredienti originali
@@ -41,15 +42,7 @@ class RecipeDetailActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_recipe_detail)
 
-        // Recupera i dati dal Intent
-        val recipeName = intent.getStringExtra("recipeName")
-        val prepTime = intent.getStringExtra("prepTime")
-        val difficulty = intent.getIntExtra("difficulty", 1)
-        val category = intent.getIntExtra("categoria", 1)
-        val note = intent.getIntExtra("note", 1)
-        val imageResId = intent.getIntExtra("imageResId", R.drawable.dinner)
-        val description = intent.getStringExtra("description")
-        val ingredients = intent.getStringExtra("ingredients")
+        // Recupera la ricetta dall'intent
         recipe = intent.getParcelableExtra("recipe")
             ?: throw IllegalArgumentException("Recipe not found")
 
@@ -65,19 +58,7 @@ class RecipeDetailActivity : AppCompatActivity() {
         recyclerView.adapter = ingredientAdapter
 
         // Setta i dettagli della ricetta
-        findViewById<TextView>(R.id.textview_recipe_name).text = recipe.nome
-        findViewById<TextView>(R.id.textview_category).text = recipe.categoria
-        findViewById<TextView>(R.id.textview_difficulty).text = recipe.difficolta.toString()
-        findViewById<TextView>(R.id.textview_prep_time).text = recipe.tempoPreparazione.toString()
-        findViewById<TextView>(R.id.textview_description).text = recipe.descrizione
-
-        // Usa Glide per caricare l'immagine dall'URL
-        Glide.with(this)
-            .load(recipe.imageUrl)
-            .into(findViewById(R.id.imageview_recipe))
-
-        findViewById<RatingBar>(R.id.ratingbar_difficulty).rating = recipe.difficolta.toFloat()
-        findViewById<TextView>(R.id.textview_notes).text = recipe.note
+        setRecipeDetails(recipe)
 
         updateCopyButtonState()
 
@@ -85,7 +66,7 @@ class RecipeDetailActivity : AppCompatActivity() {
         modifyButton.setOnClickListener {
             val intent = Intent(this, UpdateRecipeActivity::class.java)
             intent.putExtra("recipe", recipe.copy(ingredienti = ArrayList(recipe.ingredienti)))
-            startActivity(intent)
+            startActivityForResult(intent, REQUEST_CODE_UPDATE_RECIPE)
         }
 
         // Imposta il click listener sul bottone Calcola
@@ -147,26 +128,38 @@ class RecipeDetailActivity : AppCompatActivity() {
         }
     }
 
+    private fun setRecipeDetails(recipe: Ricetta) {
+        findViewById<TextView>(R.id.textview_recipe_name).text = recipe.nome
+        findViewById<TextView>(R.id.textview_category).text = recipe.categoria
+        findViewById<TextView>(R.id.textview_difficulty).text = recipe.difficolta.toString()
+        findViewById<TextView>(R.id.textview_prep_time).text = "${recipe.tempoPreparazione} min"
+        findViewById<TextView>(R.id.textview_description).text = recipe.descrizione
+        findViewById<TextView>(R.id.textview_notes).text = recipe.note
+
+        findViewById<RatingBar>(R.id.ratingbar_difficulty).rating = recipe.difficolta.toFloat()
+
+        // Usa Glide per caricare l'immagine dall'URL
+        Glide.with(this)
+            .load(recipe.imageUrl)
+            .into(findViewById(R.id.imageview_recipe))
+    }
+
     // Funzione per copiare gli ingredienti negli appunti
     @SuppressLint("ServiceCast")
     private fun copyIngredientsToClipboard() {
         val clipboard = getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager
-        val ingredientsList = recipe.ingredienti // Assicurati di prendere sempre la lista aggiornata
+        val ingredientsList = recipe.ingredienti
 
         // Formatta la lista di ingredienti come stringa
         val stringBuilder = StringBuilder()
         for (ingredient in ingredientsList) {
-            stringBuilder.append("${ingredient.nome}: ${ingredient.quantita}\n") // Aggiungi \n per separare gli ingredienti
+            stringBuilder.append("${ingredient.nome}: ${ingredient.quantita}\n")
         }
 
         // Verifica che ci siano ingredienti
         if (stringBuilder.isNotEmpty()) {
             val clip = ClipData.newPlainText("Ingredients", stringBuilder.toString())
-
-            // Copia nel clipboard
             clipboard.setPrimaryClip(clip)
-
-            // Mostra un messaggio di conferma
             Toast.makeText(this, "Ingredienti copiati!", Toast.LENGTH_SHORT).show()
         } else {
             Toast.makeText(this, "Non ci sono ingredienti da copiare", Toast.LENGTH_SHORT).show()
@@ -178,13 +171,28 @@ class RecipeDetailActivity : AppCompatActivity() {
         val copyButton = findViewById<Button>(R.id.button_copy)
 
         // Se ci sono ingredienti, abilita il bottone, altrimenti disabilitalo
-        if (recipe.ingredienti.isNotEmpty()) { // Controlla direttamente la lista di ingredienti
+        if (recipe.ingredienti.isNotEmpty()) {
             copyButton.isEnabled = true
             copyButton.setOnClickListener {
-                copyIngredientsToClipboard() // Chiamata alla funzione di copia
+                copyIngredientsToClipboard()
             }
         } else {
             copyButton.isEnabled = false
+        }
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        if (requestCode == REQUEST_CODE_UPDATE_RECIPE && resultCode == Activity.RESULT_OK) {
+            data?.getParcelableExtra<Ricetta>("updatedRecipe")?.let { updatedRecipe ->
+                recipe = updatedRecipe
+                // Aggiorna i dettagli della ricetta con i nuovi valori
+                setRecipeDetails(recipe)
+
+                // Aggiorna gli ingredienti nella RecyclerView
+                ingredientAdapter.updateIngredients(recipe.ingredienti)
+                updateCopyButtonState()
+            }
         }
     }
 }

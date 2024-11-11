@@ -57,6 +57,7 @@ class RecipeAdapter(
         holder.itemView.setOnClickListener { onClick(recipe) }
     }
 
+
     override fun getItemCount() = recipes.size
 }
 
