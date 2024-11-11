@@ -1,4 +1,5 @@
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -6,33 +7,54 @@
     tools:context=".home.HomeFragment"
     android:background="@color/light_gray">
 
-    <!-- EditText aggiunta sopra il LinearLayout -->
-    <EditText
-        android:id="@+id/edittext_cerca_globale"
-        android:layout_width="300dp"
-        android:layout_height="wrap_content"
-        android:layout_margin="6dp"
-        android:background="@drawable/search_bg"
-        android:drawableLeft="@drawable/baseline_search_24"
-        android:fontFamily="serif"
-        android:hint="Cerca le tue ricette!"
-        android:padding="10dp"
-        android:textColor="@color/white"
-        android:textColorHint="@color/white"
-        android:textSize="16dp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintEnd_toStartOf="@id/button_cerca" />
-
+    <!-- Contenitore orizzontale per barra di ricerca e pulsante cerca -->
     <LinearLayout
-        xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:cardView="http://schemas.android.com/apk/res-auto"
+        android:id="@+id/search_container"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:padding="8dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <!-- EditText per la ricerca -->
+        <EditText
+            android:id="@+id/edittext_cerca_globale"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:layout_marginEnd="8dp"
+            android:background="@drawable/search_bg"
+            android:drawableLeft="@drawable/baseline_search_24"
+            android:fontFamily="serif"
+            android:hint="Cerca le tue ricette!"
+            android:padding="10dp"
+            android:textColor="@color/white"
+            android:textColorHint="@color/white"
+            android:textSize="16dp" />
+
+        <!-- Bottone Cerca -->
+        <Button
+            android:id="@+id/button_cerca"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/btn_bg_design"
+            android:fontFamily="serif"
+            android:text="Cerca"
+            android:paddingHorizontal="16dp"
+            android:paddingVertical="10dp"
+            android:textColor="@color/white" />
+    </LinearLayout>
+
+    <!-- LinearLayout verticale per il contenuto della schermata -->
+    <LinearLayout
         android:id="@+id/linearLayout1"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
         android:padding="16dp"
-        app:layout_constraintTop_toBottomOf="@id/edittext_cerca_globale">
+        app:layout_constraintTop_toBottomOf="@id/search_container">
 
         <!-- Header per l'espansione del menu a tendina -->
         <androidx.cardview.widget.CardView
@@ -80,6 +102,7 @@
                 android:layout_height="wrap_content"
                 android:prompt="@string/seleziona_difficolta" />
 
+            <!-- EditText per ingredienti -->
             <EditText
                 android:id="@+id/edittext_ingredienti"
                 android:layout_width="match_parent"
@@ -88,21 +111,7 @@
         </LinearLayout>
     </LinearLayout>
 
-    <!-- Bottone per cercare -->
-    <Button
-        android:id="@+id/button_cerca"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Cerca"
-        android:background="@drawable/btn_bg_design"
-        android:fontFamily="serif"
-        android:layout_marginTop="5dp"
-        android:layout_marginBottom="5dp"
-        android:layout_marginEnd="10dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintBottom_toTopOf="@id/dropdown_header"/>
-
+    <!-- RecyclerView per le ricette -->
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recyclerview_ricette"
         android:layout_width="match_parent"
@@ -112,6 +121,4 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"/>
-
-
 </androidx.constraintlayout.widget.ConstraintLayout>

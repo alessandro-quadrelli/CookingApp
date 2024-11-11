@@ -9,6 +9,7 @@ import android.graphics.Bitmap
 import android.net.Uri
 import android.os.Bundle
 import android.provider.MediaStore
+import android.util.Log
 import android.view.LayoutInflater
 import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
@@ -87,7 +88,7 @@ class UpdateRecipeActivity : AppCompatActivity() {
 
         // Setup per il pulsante di salvataggio delle modifiche
         buttonUpdateRecipe.setOnClickListener {
-            UpdatedRecipe()
+            updateRecipe()
         }
     }
 
@@ -100,11 +101,26 @@ class UpdateRecipeActivity : AppCompatActivity() {
 
     private fun addIngredient() {
         val inflater = getSystemService(LAYOUT_INFLATER_SERVICE) as LayoutInflater
-        val ingredientView = inflater.inflate(R.layout.item_addingredient, null)
+        val ingredientView = inflater.inflate(R.layout.item_addingredient, linearLayoutIngredients, false) // Cambiato da `null` a `linearLayoutIngredients`
+
+        // Trova il pulsante di rimozione nella vista degli ingredienti
+        val buttonRemoveIngredient = ingredientView.findViewById<ImageButton>(R.id.b_remove_ingredient)
+
+        // Imposta il click listener per rimuovere la vista corrispondente
+        buttonRemoveIngredient.setOnClickListener {
+            Log.d("UpdateRecipeActivity", "Pulsante di rimozione cliccato per l'ingrediente con id: ${ingredientView.id}")
+            linearLayoutIngredients.removeView(ingredientView)
+        }
+
+        // Aggiungi la vista dell'ingrediente alla LinearLayout
         linearLayoutIngredients.addView(ingredientView)
     }
 
+
     private fun loadRecipe(recipe: Ricetta) {
+        // Rimuove tutte le viste esistenti nel LinearLayout per evitare duplicati
+        linearLayoutIngredients.removeAllViews()
+
         editTextRecipeName.setText(recipe.nome)
         editTextPreparationTime.setText(recipe.tempoPreparazione.toString())
         ratingBarDifficulty.rating = recipe.difficolta.toFloat()
@@ -120,19 +136,32 @@ class UpdateRecipeActivity : AppCompatActivity() {
             Glide.with(this).load(imageUri).into(imageViewRecipe)
         }
 
-        // Carica gli ingredienti esistenti nella LinearLayout
+        // Carica gli ingredienti esistenti nella LinearLayout e imposta i listener
         recipe.ingredienti.forEach { ingrediente ->
             val inflater = getSystemService(LAYOUT_INFLATER_SERVICE) as LayoutInflater
-            val ingredientView = inflater.inflate(R.layout.item_addingredient, null)
+            val ingredientView = inflater.inflate(R.layout.item_addingredient, linearLayoutIngredients, false)
+
             val ingredientName = ingredientView.findViewById<EditText>(R.id.textview_ingredient_name)
             val ingredientQuantity = ingredientView.findViewById<EditText>(R.id.edittextview_ingredient_quantity)
+            val buttonRemoveIngredient = ingredientView.findViewById<ImageButton>(R.id.b_remove_ingredient)
+
+            // Imposta i valori degli ingredienti
             ingredientName.setText(ingrediente.nome)
             ingredientQuantity.setText(ingrediente.quantita.toString())
+
+            // Imposta il listener di clic per il pulsante di rimozione
+            buttonRemoveIngredient.setOnClickListener {
+                Log.d("UpdateRecipeActivity", "Pulsante di rimozione cliccato per l'ingrediente con id: ${ingredientView.id}")
+                linearLayoutIngredients.removeView(ingredientView)
+            }
+
+            // Aggiungi la vista dell'ingrediente al LinearLayout
             linearLayoutIngredients.addView(ingredientView)
         }
     }
 
-    private fun UpdatedRecipe() {
+
+    private fun updateRecipe() {
         val name = editTextRecipeName.text.toString()
         val preparationTime = editTextPreparationTime.text.toString().trim().toIntOrNull() ?: 0
         val difficulty = ratingBarDifficulty.rating.toInt()
