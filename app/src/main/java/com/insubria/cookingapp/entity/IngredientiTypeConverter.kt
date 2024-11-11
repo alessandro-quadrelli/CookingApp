@@ -6,6 +6,7 @@ import com.google.gson.Gson
 
 
 class IngredientiTypeConverter {
+
     @TypeConverter
     fun fromIngredientiList(ingredienti: List<Ingrediente>?): String {
         return Gson().toJson(ingredienti)

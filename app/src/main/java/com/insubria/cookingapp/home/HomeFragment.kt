@@ -12,6 +12,7 @@ import android.widget.EditText
 import android.widget.LinearLayout
 import android.widget.Spinner
 import android.widget.TextView
+import android.widget.Toast
 import androidx.cardview.widget.CardView
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
@@ -28,7 +29,6 @@ import com.insubria.cookingapp.utils.CookingAppDatabase
 
 class HomeFragment : Fragment() {
 
-    //private lateinit var spinnerTipologia: Spinner
     private lateinit var spinnerTipoPortata: Spinner
     private lateinit var spinnerTempo: Spinner
     private lateinit var spinnerDifficolta: Spinner
@@ -40,8 +40,8 @@ class HomeFragment : Fragment() {
     private var difficoltaSelezionata: Int? = null
     private lateinit var buttonCerca: Button
     private lateinit var ricetta: RicettaRepository
-    private lateinit var cercaGlobale : EditText
-
+    private lateinit var cercaGlobale: EditText
+    private lateinit var edittextIngredienti: EditText
 
     private var recipes = mutableListOf<Ricetta>()
 
@@ -57,11 +57,10 @@ class HomeFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         cercaGlobale = view.findViewById(R.id.edittext_cerca_globale)
+        edittextIngredienti = view.findViewById(R.id.edittext_ingredienti)
 
-        // Inizializza il repository
         ricetta = RicettaRepository(CookingAppDatabase.getDatabase(requireContext()).ricettaDao())
 
-        // Inizializza la RecyclerView
         recyclerView = view.findViewById(R.id.recyclerview_ricette)
         recyclerView.layoutManager = LinearLayoutManager(requireContext())
         recipeAdapter = RecipeAdapter(recipes) { recipe ->
@@ -78,7 +77,6 @@ class HomeFragment : Fragment() {
             }
         })
 
-        // Configura gli Spinner
         spinnerTipoPortata = view.findViewById(R.id.spinner_categoria)
         spinnerTempo = view.findViewById(R.id.spinner_tempo)
         spinnerDifficolta = view.findViewById(R.id.spinner_difficolta)
@@ -88,13 +86,11 @@ class HomeFragment : Fragment() {
         setupSpinner(spinnerTempo, R.array.tempi)
         setupSpinner(spinnerDifficolta, R.array.difficolta)
 
-        // Configura il bottone di ricerca
         buttonCerca = view.findViewById(R.id.button_cerca)
         buttonCerca.setOnClickListener {
             cercaRicette()
         }
 
-        // Gestisci l'espansione del layout
         val dropdownHeader = view.findViewById<CardView>(R.id.dropdown_header)
         dropdownHeader.setOnClickListener {
             dropdownContent.visibility = if (dropdownContent.visibility == View.GONE) View.VISIBLE else View.GONE
@@ -102,15 +98,33 @@ class HomeFragment : Fragment() {
     }
 
     private fun cercaRicette() {
+        // Ottieni i valori dai campi di ricerca
         var testoRicerca: String? = cercaGlobale.text.toString().trim()
-        if (testoRicerca.isNullOrEmpty()) testoRicerca = null
-        val ricette = ricetta.searchRicetta(testoRicerca, tipoRicettaSelezionato, difficoltaSelezionata, tempoSelezionato)
-        ricette.observe(viewLifecycleOwner, Observer { receipes ->
-            recipes.clear()
-            recipes.addAll(receipes)
-            recipeAdapter.notifyDataSetChanged()
-        })
+        if(testoRicerca.isNullOrEmpty()) testoRicerca = null
+        var ingredientiTesto: String? = edittextIngredienti.text.toString().trim().takeIf { it.isNotEmpty() }
+        var ingredienti: List<String>? = ingredientiTesto?.split(",")?.map { it.trim() }
+
+        // Ottieni i valori dagli Spinner
+        tipoRicettaSelezionato = spinnerTipoPortata.selectedItem?.toString().takeIf { it != "Seleziona Categoria" }
+        difficoltaSelezionata = spinnerDifficolta.selectedItem?.toString()?.toIntOrNull()
+        tempoSelezionato = spinnerTempo.selectedItem?.toString()?.toIntOrNull()
+
+        // Esegui la ricerca con i filtri
+        ricetta.searchRicetta(testoRicerca, tipoRicettaSelezionato, difficoltaSelezionata, tempoSelezionato, ingredienti)
+            .observe(viewLifecycleOwner, Observer { ricetteFiltrate ->
+                if (ricetteFiltrate.isNullOrEmpty()) {
+                    // Se non ci sono ricette, mostra un messaggio di "nessun risultato"
+                    Toast.makeText(requireContext(), "Nessuna ricetta trovata per i filtri selezionati", Toast.LENGTH_SHORT).show()
+                } else {
+                    // Se ci sono ricette, aggiorna l'adapter
+                    recipes.clear()
+                    recipes.addAll(ricetteFiltrate)
+                    recipeAdapter.notifyDataSetChanged()
+                }
+            })
     }
+
+
 
     private fun setupSpinner(spinner: Spinner, arrayResId: Int) {
         val adapter = ArrayAdapter.createFromResource(
@@ -128,10 +142,12 @@ class HomeFragment : Fragment() {
         }
         startActivity(intent)
     }
+
     // Aggiungi una nuova ricetta
     fun addNewRecipe(recipe: Ricetta) {
-        recipes.add(recipe) // Aggiungi la ricetta
-        recipeAdapter.notifyDataSetChanged() // Notifica l'adapter
+        recipes.add(recipe)
+        recipeAdapter.notifyDataSetChanged()
     }
-
 }
+
+

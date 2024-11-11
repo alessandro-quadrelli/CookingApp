@@ -101,7 +101,7 @@ class UpdateRecipeActivity : AppCompatActivity() {
 
     private fun addIngredient() {
         val inflater = getSystemService(LAYOUT_INFLATER_SERVICE) as LayoutInflater
-        val ingredientView = inflater.inflate(R.layout.item_addingredient, linearLayoutIngredients, false) // Cambiato da `null` a `linearLayoutIngredients`
+        val ingredientView = inflater.inflate(R.layout.item_addingredient, linearLayoutIngredients, false)
 
         // Trova il pulsante di rimozione nella vista degli ingredienti
         val buttonRemoveIngredient = ingredientView.findViewById<ImageButton>(R.id.b_remove_ingredient)

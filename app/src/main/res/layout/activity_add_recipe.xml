@@ -6,7 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:padding="16dp"
-    android:background="@color/light_gray"
+    android:background="@color/gray"
     tools:context=".View.AddRecipeActivity">
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -16,7 +16,6 @@
         android:padding="16dp"
         android:background="@color/white">
 
-        <!-- Titolo "Aggiungi ricetta" -->
         <TextView
             android:id="@+id/textViewAddRecipe"
             android:layout_width="0dp"
@@ -32,7 +31,6 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintBottom_toTopOf="@id/frameLayoutImageWithPlus"/>
 
-        <!-- Image Upload -->
         <FrameLayout
             android:id="@+id/frameLayoutImageWithPlus"
             android:layout_width="0dp"
@@ -43,7 +41,6 @@
             app:layout_constraintTop_toBottomOf="@id/textViewAddRecipe"
             app:layout_constraintBottom_toTopOf="@id/buttonUploadImage">
 
-            <!-- ImageView per l'immagine -->
             <ImageView
                 android:id="@+id/imageViewRecipe"
                 android:layout_width="match_parent"
@@ -51,7 +48,6 @@
                 android:scaleType="centerCrop"
                 android:background="@drawable/text_field_border" />
 
-            <!-- TextView per il simbolo "+" sovrapposto -->
             <TextView
                 android:id="@+id/plusTextView"
                 android:layout_width="match_parent"
@@ -65,7 +61,6 @@
                 android:alpha="0.15" />
         </FrameLayout>
 
-        <!-- Altri campi di input (ad esempio il nome della ricetta, difficoltà, descrizione, ecc.) -->
         <Button
             android:id="@+id/buttonUploadImage"
             android:layout_width="wrap_content"
@@ -80,7 +75,6 @@
             app:layout_constraintTop_toBottomOf="@id/frameLayoutImageWithPlus"
             app:layout_constraintBottom_toTopOf="@id/editTextRecipeName"/>
 
-        <!-- Recipe Name -->
         <EditText
             android:id="@+id/editTextRecipeName"
             android:layout_width="0dp"
@@ -95,7 +89,6 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintBottom_toTopOf="@id/textViewDifficulty"/>
 
-        <!-- Difficulty -->
         <TextView
             android:id="@+id/textViewDifficulty"
             android:layout_width="wrap_content"
@@ -124,7 +117,6 @@
             app:layout_constraintTop_toBottomOf="@id/textViewDifficulty"
             app:layout_constraintBottom_toTopOf="@id/spinnerCategory"/>
 
-        <!-- Category -->
         <Spinner
             android:id="@+id/spinnerCategory"
             android:layout_width="0dp"
@@ -149,7 +141,6 @@
             app:layout_constraintTop_toBottomOf="@id/spinnerCategory"
             app:layout_constraintBottom_toTopOf="@id/editTextDescription"/>
 
-        <!-- Preparation Time -->
         <EditText
             android:id="@+id/editTextPreparationTime"
             android:layout_width="100dp"
@@ -165,7 +156,6 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintBottom_toTopOf="@id/editTextDescription"/>
 
-        <!-- Description -->
         <EditText
             android:id="@+id/editTextDescription"
             android:layout_width="match_parent"
@@ -185,7 +175,6 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintBottom_toTopOf="@id/textViewIngredients"/>
 
-        <!-- Ingredients -->
         <TextView
             android:id="@+id/textViewIngredients"
             android:layout_width="wrap_content"
@@ -199,7 +188,6 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintBottom_toTopOf="@id/linearLayoutIngredients"/>
 
-        <!-- Dynamic Ingredients Section -->
         <LinearLayout
             android:id="@+id/linearLayoutIngredients"
             android:layout_width="0dp"
@@ -209,7 +197,6 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent" />
 
-        <!-- Button to Add Ingredient -->
         <Button
             android:id="@+id/buttonAddIngredient"
             android:layout_width="wrap_content"
@@ -224,7 +211,6 @@
             app:layout_constraintTop_toBottomOf="@id/linearLayoutIngredients"
             app:layout_constraintBottom_toTopOf="@id/editTextNotes"/>
 
-        <!-- Additional Notes -->
         <EditText
             android:id="@+id/editTextNotes"
             android:layout_width="0dp"

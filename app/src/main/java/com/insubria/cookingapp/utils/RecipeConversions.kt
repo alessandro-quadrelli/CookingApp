@@ -53,8 +53,7 @@ class RecipeConversions {
     // Moltiplica la quantità per il numero di persone
     fun multiplyIngredientQuantities(ingredienti: List<Ingrediente>, numeroPersone: Int): List<Ingrediente> {
         return ingredienti.map { ingrediente ->
-            // Moltiplica la quantità per il numero di persone
-            val newQuantity = ingrediente.quantita * numeroPersone
+            val newQuantity = ingrediente.quantita * numeroPersone // Moltiplica la quantità per il numero di persone
             ingrediente.copy(quantita = newQuantity)  // Restituisce una copia dell'ingrediente con la quantità aggiornata
         }
     }

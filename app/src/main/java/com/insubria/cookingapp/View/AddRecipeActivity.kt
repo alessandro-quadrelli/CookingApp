@@ -105,7 +105,7 @@ class AddRecipeActivity : AppCompatActivity() {
             lifecycleScope.launch {
                 ricetta.insert(recipe)
                 Toast.makeText(this@AddRecipeActivity, "Ricetta aggiunta con successo!", Toast.LENGTH_SHORT).show()
-                finish() // Chiudi l'attività dopo l'inserimento
+                finish()
             }
         }
     }

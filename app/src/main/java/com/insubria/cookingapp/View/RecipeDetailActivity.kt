@@ -138,7 +138,6 @@ class RecipeDetailActivity : AppCompatActivity() {
 
         findViewById<RatingBar>(R.id.ratingbar_difficulty).rating = recipe.difficolta.toFloat()
 
-        // Usa Glide per caricare l'immagine dall'URL
         Glide.with(this)
             .load(recipe.imageUrl)
             .into(findViewById(R.id.imageview_recipe))

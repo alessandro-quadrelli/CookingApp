@@ -32,7 +32,6 @@
     <string name="seleziona_difficolta">Seleziona Difficoltà</string>
     <string name="raccogli_tutte_le_tue_ricette">Raccogli tutte le tue ricette</string>
 
-    <!-- Array per Spinner categoria -->
     <string-array name="categoria">
         <item>Seleziona La Categoria</item>
         <item>Antipasto</item>
@@ -41,16 +40,17 @@
         <item>Dolce</item>
     </string-array>
 
-    <!-- Array per Spinner Tempo -->
     <string-array name="tempi">
         <item>Seleziona Tempo</item>
-        <item>15 minuti</item>
-        <item>30 minuti</item>
-        <item>45 minuti</item>
-        <item>1 ora</item>
+        <item>10</item>
+        <item>15</item>
+        <item>30</item>
+        <item>45</item>
+        <item>60</item>
+        <item>90</item>
+        <item>120</item>
     </string-array>
 
-    <!-- Array per Spinner Difficoltà -->
     <string-array name="difficolta">
         <item>Seleziona Difficoltà</item>
         <item>1</item>

@@ -46,7 +46,7 @@ class MainActivity : AppCompatActivity() {
         val navView: NavigationView = binding.navView
         val navController = findNavController(R.id.nav_host_fragment_content_main)
 
-        // Logout button logic
+        // Logica del pulsante di disconnessione
         logoutButton = navView.findViewById(R.id.log_out_button)
         logoutButton.setOnClickListener {
             auth.signOut()
@@ -54,16 +54,16 @@ class MainActivity : AppCompatActivity() {
             finish()
         }
 
-        // Set the user's email in the navigation header if authenticated
+        // Imposta l'e-mail dell'utente nell'intestazione di navigazione se autenticato
         val currentUser = auth.getCurrentUser()
         if (currentUser != null) {
-            // Get the header view of the NavigationView and set the email
+            // Ottieni la visualizzazione dell'intestazione di NavigationView e imposta l'e-mail
             val headerView = navView.getHeaderView(0)
             navHeaderTitle = headerView.findViewById(R.id.nav_header_title)
             navHeaderTitle.text = currentUser.email?.uppercase() ?: "Email non disponibile"
         }
 
-        // Navigation configuration
+        // Configurazione della navigazione
         appBarConfiguration = AppBarConfiguration(
             setOf(
                 R.id.nav_home, R.id.nav_gallery, R.id.nav_conversion
@@ -74,7 +74,6 @@ class MainActivity : AppCompatActivity() {
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
-        // Inflate the menu; this adds items to the action bar if it is present.
         menuInflater.inflate(R.menu.main, menu)
         return true
     }

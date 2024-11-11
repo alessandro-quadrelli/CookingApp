@@ -15,7 +15,7 @@ import com.insubria.cookingapp.entity.Ricetta
 import java.io.File
 
 class RecipeAdapter(
-    private val recipes: List<Ricetta>,
+    private var recipes: List<Ricetta>,
     private val onClick: (Ricetta) -> Unit
 ) : RecyclerView.Adapter<RecipeAdapter.RecipeViewHolder>() {
 
@@ -58,6 +58,10 @@ class RecipeAdapter(
     }
 
 
+    fun updateData(nuoveRicette: List<Ricetta>) {
+        this.recipes = nuoveRicette
+        notifyDataSetChanged()
+    }
     override fun getItemCount() = recipes.size
 }
 

@@ -21,9 +21,7 @@ class SLFragment : Fragment() {
     ): View? {
         val view = inflater.inflate(R.layout.fragment_shoppinglist, container, false)
 
-        // Riferimento al Button
         val sendText = view.findViewById<Button>(R.id.sendtext)
-        // Riferimento all'EditText
         val editTextShoppingList = view.findViewById<EditText>(R.id.editTextShoppingList)
 
         sendText.setOnClickListener {

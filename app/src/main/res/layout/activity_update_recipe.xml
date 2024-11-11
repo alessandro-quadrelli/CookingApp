@@ -6,7 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:padding="16dp"
-    android:background="@color/light_gray"
+    android:background="@color/gray"
     tools:context=".View.AddRecipeActivity">
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -30,7 +30,7 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintBottom_toTopOf="@id/frameLayoutImage" />
-        <!-- FrameLayout for Image and "+" Text -->
+
         <FrameLayout
             android:id="@+id/frameLayoutImage"
             android:layout_width="0dp"
@@ -40,14 +40,14 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintBottom_toTopOf="@id/buttonUploadImageUpdate">
-            <!-- Image View -->
+
             <ImageView
                 android:id="@+id/imageViewRecipeUpdate"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:scaleType="centerCrop"
                 android:background="@drawable/text_field_border" />
-            <!-- TextView with "+" -->
+
             <TextView
                 android:id="@+id/plusTextView"
                 android:layout_width="match_parent"
@@ -75,7 +75,6 @@
             app:layout_constraintTop_toBottomOf="@id/frameLayoutImage"
             app:layout_constraintBottom_toTopOf="@id/editTextRecipeNameUpdate"/>
 
-        <!-- Recipe Name -->
         <EditText
             android:id="@+id/editTextRecipeNameUpdate"
             android:layout_width="0dp"
@@ -90,7 +89,6 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintBottom_toTopOf="@id/textViewDifficultyUpdate"/>
 
-        <!-- Difficulty -->
         <TextView
             android:id="@+id/textViewDifficultyUpdate"
             android:layout_width="wrap_content"
@@ -119,7 +117,6 @@
             app:layout_constraintTop_toBottomOf="@id/textViewDifficultyUpdate"
             app:layout_constraintBottom_toTopOf="@id/spinnerCategoryUpdate"/>
 
-        <!-- Category -->
         <Spinner
             android:id="@+id/spinnerCategoryUpdate"
             android:layout_width="0dp"
@@ -144,7 +141,6 @@
             app:layout_constraintTop_toBottomOf="@id/spinnerCategoryUpdate"
             app:layout_constraintBottom_toTopOf="@id/editTextDescriptionUpdate"/>
 
-        <!-- Preparation Time -->
         <EditText
             android:id="@+id/editTextPreparationTimeUpdate"
             android:layout_width="100dp"
@@ -160,7 +156,6 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintBottom_toTopOf="@id/editTextDescriptionUpdate"/>
 
-        <!-- Description -->
         <EditText
             android:id="@+id/editTextDescriptionUpdate"
             android:layout_width="match_parent"
@@ -180,7 +175,6 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintBottom_toTopOf="@id/textViewIngredientsUpdate"/>
 
-        <!-- Ingredients -->
         <TextView
             android:id="@+id/textViewIngredientsUpdate"
             android:layout_width="wrap_content"
@@ -194,7 +188,6 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintBottom_toTopOf="@id/linearLayoutIngredientsUpdate"/>
 
-        <!-- Dynamic Ingredients Section -->
         <LinearLayout
             android:id="@+id/linearLayoutIngredientsUpdate"
             android:layout_width="0dp"
@@ -204,7 +197,6 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent" />
 
-        <!-- Button to Add Ingredient -->
         <Button
             android:id="@+id/buttonAddIngredientUpdate"
             android:layout_width="wrap_content"
@@ -219,7 +211,6 @@
             app:layout_constraintTop_toBottomOf="@id/linearLayoutIngredientsUpdate"
             app:layout_constraintBottom_toTopOf="@id/editTextNotesUpdate"/>
 
-        <!-- Additional Notes -->
         <EditText
             android:id="@+id/editTextNotesUpdate"
             android:layout_width="0dp"

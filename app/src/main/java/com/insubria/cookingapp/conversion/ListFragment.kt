@@ -27,7 +27,6 @@ class ListFragment : Fragment() {
     private lateinit var inputZucchero: EditText
     private lateinit var inputMiele: EditText
 
-    // Memorizziamo i TextWatcher
     private lateinit var burroWatcher: TextWatcher
     private lateinit var olioWatcher: TextWatcher
     private lateinit var burroRicottaWatcher: TextWatcher
@@ -50,7 +49,6 @@ class ListFragment : Fragment() {
     ): View? {
         val view = inflater.inflate(R.layout.fragment_list, container, false)
 
-        // Ottieni riferimenti agli EditText
         inputBurro = view.findViewById(R.id.input_burro)
         inputOlio = view.findViewById(R.id.input_olio)
         inputBurroRicotta = view.findViewById(R.id.input_burro_ricotta)
@@ -125,7 +123,7 @@ class ListFragment : Fragment() {
                         // Se il valore non è valido, pulisci l'output
                         output.setText("")
                     }
-                }, delayMillis)  // Debounce con ritardo
+                }, delayMillis)
             }
 
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}

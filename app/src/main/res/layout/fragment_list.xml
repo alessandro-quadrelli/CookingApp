@@ -10,13 +10,11 @@
     android:background="@color/light_gray"
     tools:context=".conversion.ListFragment">
 
-    <!-- ConstraintLayout che contiene tutti i gruppi di conversione -->
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/inner_constraint_layout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
-        <!-- Gruppo 1: Burro <-> Olio -->
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/constraint_layout_burro_olio"
             android:layout_width="match_parent"
@@ -94,7 +92,6 @@
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
-        <!-- Gruppo 2: Burro <-> Ricotta -->
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/constraint_layout_burro_ricotta"
             android:layout_width="match_parent"
@@ -172,7 +169,6 @@
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
-        <!-- Gruppo 3: Cucchiaino <-> Grammi -->
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/constraint_layout_cucchiaino_grammi"
             android:layout_width="match_parent"
@@ -250,7 +246,6 @@
                 android:layout_marginTop="5dp"/>
         </androidx.constraintlayout.widget.ConstraintLayout>
 
-        <!-- Gruppo 4: Bicchiere <-> Centilitri -->
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/constraint_layout_bicchiere_centilitri"
             android:layout_width="match_parent"
@@ -326,7 +321,6 @@
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
-        <!-- Gruppo 5: Zucchero <-> Miele -->
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/constraint_layout_zucchero_miele"
             android:layout_width="match_parent"

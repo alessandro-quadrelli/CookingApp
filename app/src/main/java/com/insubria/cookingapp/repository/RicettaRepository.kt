@@ -15,7 +15,6 @@ class RicettaRepository(private val ricettaDao: RicettaDao) {
         return ricettaDao.insert(ricetta)
     }
 
-
     // Aggiornare una ricetta
     suspend fun update(ricetta: Ricetta) {
         ricettaDao.update(ricetta)
