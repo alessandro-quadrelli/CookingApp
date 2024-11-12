@@ -34,10 +34,11 @@ class RicettaRepository(private val ricettaDao: RicettaDao) {
         nome: String? = null,
         categoria: String? = null,
         difficolta: Int? = null,
-        tempo: Int? = null,
+        tempoMinimo: Int? = null,
+        tempoMassimo: Int? = null,
         ingredienti: List<String>? = null
     ): LiveData<List<Ricetta>> {
-        return ricettaDao.searchRecipes(nome, categoria, difficolta, tempo, ingredienti)
+        return ricettaDao.searchRecipes(nome, categoria, difficolta, tempoMinimo, tempoMassimo)
     }
 
 }

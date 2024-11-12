@@ -42,17 +42,17 @@
 
     <string-array name="tempi">
         <item>Seleziona Tempo</item>
-        <item>10</item>
-        <item>15</item>
-        <item>30</item>
-        <item>45</item>
-        <item>60</item>
-        <item>90</item>
-        <item>120</item>
+        <item>0-15 min</item>
+        <item>15-30 min</item>
+        <item>30-45 min</item>
+        <item>45 min - 1 ora</item>
+        <item>1 ora - 1,5 ore</item>
+        <item>1,5 ore - 2 ore</item>
     </string-array>
 
     <string-array name="difficolta">
         <item>Seleziona Difficoltà</item>
+        <item>0</item>
         <item>1</item>
         <item>2</item>
         <item>3</item>
