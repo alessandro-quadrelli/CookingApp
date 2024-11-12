@@ -32,13 +32,12 @@ class HomeFragment : Fragment() {
     private lateinit var recipeAdapter: RecipeAdapter
     private lateinit var recyclerView: RecyclerView
     private var tipoRicettaSelezionato: String? = null
-    private var tempoSelezionato: Int? = null
+    private var tempoMinimo: Int? = null
+    private var tempoMassimo: Int? = null
     private var difficoltaSelezionata: Int? = null
     private lateinit var buttonCerca: Button
     private lateinit var ricetta: RicettaRepository
     private lateinit var cercaGlobale: EditText
-    private var tempoMinimo: Int? = null
-    private var tempoMassimo: Int? = null
 
     private var recipes = mutableListOf<Ricetta>()
 
@@ -119,7 +118,40 @@ class HomeFragment : Fragment() {
 
         spinnerTempo.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
             override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
-                tempoSelezionato = if (position > 0) spinnerTempo.selectedItem.toString().toIntOrNull() else null
+                when (position) {
+                    1 -> {
+                        tempoMinimo = 0
+                        tempoMassimo = 15
+                    }
+                    2 -> {
+                        tempoMinimo = 15
+                        tempoMassimo = 30
+                    }
+                    3 -> {
+                        tempoMinimo = 30
+                        tempoMassimo = 45
+                    }
+                    4 -> {
+                        tempoMinimo = 45
+                        tempoMassimo = 60
+                    }
+                    5 -> {
+                        tempoMinimo = 60
+                        tempoMassimo = 90
+                    }
+                    6 -> {
+                        tempoMinimo = 90
+                        tempoMassimo = 120
+                    }
+                    7 -> { // > 2 ore
+                        tempoMinimo = 120
+                        tempoMassimo = null
+                    }
+                    else -> {
+                        tempoMinimo = null
+                        tempoMassimo = null
+                    }
+                }
                 cercaRicette()
             }
 
@@ -135,7 +167,6 @@ class HomeFragment : Fragment() {
             override fun onNothingSelected(parent: AdapterView<*>?) {}
         }
     }
-
 
     private fun cercaRicette() {
         var testoRicerca: String? = cercaGlobale.text.toString().trim()

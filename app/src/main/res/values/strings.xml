@@ -48,6 +48,7 @@
         <item>45 min - 1 ora</item>
         <item>1 ora - 1,5 ore</item>
         <item>1,5 ore - 2 ore</item>
+        <item> > 2 ore</item>
     </string-array>
 
     <string-array name="difficolta">
