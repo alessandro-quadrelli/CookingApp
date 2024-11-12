@@ -7,19 +7,19 @@
 
     <fragment
         android:id="@+id/nav_home"
-        android:name="com.insubria.cookingapp.home.HomeFragment"
+        android:name="com.insubria.cookingapp.ui.home.HomeFragment"
         android:label="@string/Recipe"
         tools:layout="@layout/fragment_home" />
 
     <fragment
         android:id="@+id/nav_gallery"
-        android:name="com.insubria.cookingapp.gallery.SLFragment"
+        android:name="com.insubria.cookingapp.ui.shoppingList.SLFragment"
         android:label="@string/ShoppingList"
         tools:layout="@layout/fragment_shoppinglist" />
 
     <fragment
         android:id="@+id/nav_conversion"
-        android:name="com.insubria.cookingapp.conversion.ListFragment"
+        android:name="com.insubria.cookingapp.ui.conversions.ListFragment"
         android:label="@string/Conversions"
         tools:layout="@layout/fragment_list" />
 </navigation>

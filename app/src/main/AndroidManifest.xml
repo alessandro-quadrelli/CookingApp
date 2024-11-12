@@ -22,13 +22,13 @@
         android:usesCleartextTraffic="true"
         tools:targetApi="31">
         <activity
-            android:name=".View.UpdateRecipeActivity"
+            android:name=".ui.recipe.UpdateRecipeActivity"
             android:exported="false" />
         <activity
-            android:name=".View.AddRecipeActivity"
+            android:name=".ui.recipe.AddRecipeActivity"
             android:exported="false" />
         <activity
-            android:name=".View.RecipeDetailActivity"
+            android:name=".ui.recipe.RecipeDetailActivity"
             android:exported="false" />
 
         <provider
@@ -42,15 +42,15 @@
         </provider>
 
         <activity
-            android:name=".View.LoginActivity"
+            android:name=".ui.auth.LoginActivity"
             android:exported="false"
             android:windowSoftInputMode="adjustPan" />
         <activity
-            android:name=".View.RegisterActivity"
+            android:name=".ui.auth.RegisterActivity"
             android:exported="false"
             android:windowSoftInputMode="adjustPan" />
         <activity
-            android:name=".View.WelcomeActivity"
+            android:name=".ui.home.WelcomeActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -59,7 +59,7 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".View.MainActivity"
+            android:name=".ui.home.MainActivity"
             android:exported="true"
             android:label="@string/app_name"
             android:theme="@style/Theme.CookingApp.NoActionBar" />

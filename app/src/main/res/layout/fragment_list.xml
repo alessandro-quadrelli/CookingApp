@@ -8,7 +8,7 @@
     android:fillViewport="true"
     android:padding="15dp"
     android:background="@color/light_gray"
-    tools:context=".conversion.ListFragment">
+    tools:context=".ui.conversions.ListFragment">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/inner_constraint_layout"

@@ -1,6 +1,6 @@
 package com.insubria.cookingapp.utils
 
-import com.insubria.cookingapp.entity.Ingrediente
+import com.insubria.cookingapp.data.entity.Ingrediente
 
 class RecipeConversions {
 

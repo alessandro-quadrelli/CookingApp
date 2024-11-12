@@ -5,11 +5,11 @@ import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
 import androidx.room.TypeConverters
-import com.insubria.cookingapp.dao.IngredienteDao
-import com.insubria.cookingapp.dao.RicettaDao
-import com.insubria.cookingapp.entity.Ingrediente
-import com.insubria.cookingapp.entity.IngredientiTypeConverter
-import com.insubria.cookingapp.entity.Ricetta
+import com.insubria.cookingapp.data.dao.IngredienteDao
+import com.insubria.cookingapp.data.dao.RicettaDao
+import com.insubria.cookingapp.data.entity.Ingrediente
+import com.insubria.cookingapp.data.entity.IngredientiTypeConverter
+import com.insubria.cookingapp.data.entity.Ricetta
 
 @Database(entities = [Ricetta::class, Ingrediente::class], version = 2, exportSchema = false)
 @TypeConverters(IngredientiTypeConverter::class)

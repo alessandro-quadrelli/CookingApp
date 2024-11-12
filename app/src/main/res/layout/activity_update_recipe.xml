@@ -7,7 +7,7 @@
     android:layout_height="match_parent"
     android:padding="16dp"
     android:background="@color/gray"
-    tools:context=".View.AddRecipeActivity">
+    tools:context=".ui.recipe.AddRecipeActivity">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/constraintmaster"

@@ -1,6 +1,6 @@
 package com.insubria.cookingapp.utils
 
-import com.insubria.cookingapp.dao.RicettaDao
+import com.insubria.cookingapp.data.dao.RicettaDao
 
 import android.app.Activity
 import android.content.Context
@@ -11,7 +11,6 @@ import android.provider.MediaStore
 import android.widget.Toast
 import androidx.activity.result.ActivityResultLauncher
 import com.google.firebase.storage.FirebaseStorage
-import com.insubria.cookingapp.auth.FirebaseAuthentication
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import java.io.ByteArrayOutputStream
